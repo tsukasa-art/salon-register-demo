@@ -7,7 +7,23 @@ import { getCategoryInfo } from '../data/categoryInfo'
 
 const auth = useAuth()
 const { menusByCategory, load } = useMenus()
-const reg = useRegister()
+const {
+  items,
+  paymentAmount,
+  subtotal,
+  tax,
+  total,
+  change,
+  addItem,
+  removeItem,
+  isSelected,
+  toggleItem,
+  setPayment,
+  clear,
+  checkout,
+  getItemDisplayPrice,
+  formatPrice,
+} = useRegister()
 
 onMounted(() => load())
 </script>
@@ -35,8 +51,8 @@ onMounted(() => load())
                 :key="menu.name + menu.category"
                 type="button"
                 class="menu-btn"
-                :class="{ selected: reg.isSelected(menu.name + menu.category) }"
-                @click="reg.toggleItem(menu)"
+                :class="{ selected: isSelected(menu.name + menu.category) }"
+                @click="toggleItem(menu)"
               >
                 <span class="menu-name">{{ menu.name }}</span>
                 <span class="menu-price">¥{{ menu.price_including_tax?.toLocaleString() }}</span>
@@ -53,11 +69,11 @@ onMounted(() => load())
       <aside class="receipt">
         <h3>ご利用明細</h3>
         <div class="item-list">
-          <template v-if="reg.items.length">
-            <div v-for="item in reg.items" :key="item.id" class="receipt-item">
+          <template v-if="items.length">
+            <div v-for="item in items" :key="item.id" class="receipt-item">
               <span class="item-name">{{ item.name }}</span>
-              <span class="item-price">{{ reg.formatPrice(reg.getItemDisplayPrice(item)) }}</span>
-              <button type="button" class="remove-item" aria-label="削除" @click="reg.removeItem(item.id)">×</button>
+              <span class="item-price">{{ formatPrice(getItemDisplayPrice(item)) }}</span>
+              <button type="button" class="remove-item" aria-label="削除" @click="removeItem(item.id)">×</button>
             </div>
           </template>
           <div v-else class="empty-state">
@@ -65,19 +81,19 @@ onMounted(() => load())
           </div>
         </div>
         <div class="total-section">
-          <div class="total-row subtotal"><span>小計（税抜）</span><span>{{ reg.formatPrice(reg.subtotal) }}</span></div>
-          <div class="total-row tax"><span>消費税（10%）</span><span>{{ reg.formatPrice(reg.tax) }}</span></div>
-          <div class="total-row total"><span>合計</span><span>{{ reg.formatPrice(reg.total) }}</span></div>
+          <div class="total-row subtotal"><span>小計（税抜）</span><span>{{ formatPrice(subtotal) }}</span></div>
+          <div class="total-row tax"><span>消費税（10%）</span><span>{{ formatPrice(tax) }}</span></div>
+          <div class="total-row total"><span>合計</span><span>{{ formatPrice(total) }}</span></div>
         </div>
         <div class="payment-section">
           <label class="payment-label">お預かり金額</label>
           <div class="quick-amounts">
-            <button type="button" class="quick-btn" @click="reg.setPayment(5000)">5千円</button>
-            <button type="button" class="quick-btn" @click="reg.setPayment(10000)">1万円</button>
-            <button type="button" class="quick-btn" @click="reg.setPayment(20000)">2万円</button>
+            <button type="button" class="quick-btn" @click="setPayment(5000)">5千円</button>
+            <button type="button" class="quick-btn" @click="setPayment(10000)">1万円</button>
+            <button type="button" class="quick-btn" @click="setPayment(20000)">2万円</button>
           </div>
           <input
-            v-model.number="reg.paymentAmount"
+            v-model.number="paymentAmount"
             type="number"
             class="payment-input"
             placeholder="¥0"
@@ -87,11 +103,11 @@ onMounted(() => load())
           />
           <div class="change-box">
             <span class="change-label">お釣り</span>
-            <span class="change-amount">{{ reg.formatPrice(reg.change) }}</span>
+            <span class="change-amount">{{ formatPrice(change) }}</span>
           </div>
         </div>
-        <button type="button" class="main-action-btn" @click="reg.checkout()">会計確定</button>
-        <button type="button" class="clear-btn" @click="reg.clear()">すべてクリア</button>
+        <button type="button" class="main-action-btn" @click="checkout()">会計確定</button>
+        <button type="button" class="clear-btn" @click="clear()">すべてクリア</button>
       </aside>
     </div>
   </div>
