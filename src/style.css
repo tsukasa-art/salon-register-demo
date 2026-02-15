@@ -79,8 +79,11 @@ body.modal-open {
   grid-template-columns: 1fr 400px;
   gap: 28px;
   align-items: start;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 main.main-content {
@@ -200,6 +203,32 @@ main.main-content {
 .menu-btn.selected .menu-price,
 .menu-btn.selected small {
   color: var(--bg-white);
+}
+
+/* 顧客番号バッジ（①②表示） */
+.customer-number-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-green);
+  font-size: 12px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--primary-green);
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-btn.selected .customer-number-badge {
+  background: var(--primary-green);
+  color: white;
+  border-color: white;
 }
 
 /* カテゴリ別の色分け（本番と統一） */
@@ -412,6 +441,7 @@ main.main-content {
   max-height: calc(100vh - 40px);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .receipt h3 {
@@ -420,16 +450,30 @@ main.main-content {
   margin-bottom: 24px;
   color: var(--primary-green);
   letter-spacing: -0.3px;
+  flex-shrink: 0;
+}
+
+.receipt .customer-list {
+  flex-shrink: 0;
 }
 
 .item-list {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   margin-bottom: 6px;
-  min-height: auto;
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.receipt .total-section,
+.receipt .payment-section,
+.receipt .main-action-btn,
+.receipt .clear-btn,
+.receipt .secondary-action-btn,
+.receipt .report-action-btn {
+  flex-shrink: 0;
 }
 
 .empty-state {
@@ -1293,6 +1337,16 @@ main.main-content {
     grid-template-columns: 1fr;
     gap: 20px;
     margin-top: 30px;
+    max-height: none;
+    overflow: visible;
+    align-items: start;
+  }
+
+  main.main-content {
+    margin-top: 20px;
+    overflow: visible;
+    min-height: auto;
+    gap: 32px;
   }
 
   .receipt {
@@ -1301,21 +1355,18 @@ main.main-content {
     order: 2;
   }
 
-  main.main-content {
-    margin-top: 20px;
-  }
-
   .menu-section {
     padding: 20px;
-    margin-top: 15px;
+    margin-top: 24px;
   }
 
   .menu-section:first-child {
-    margin-top: 30px;
+    margin-top: 32px;
   }
 
   .section-header {
-    margin-top: 10px;
+    margin-top: 14px;
+    margin-bottom: 20px;
   }
 
   .section-header h2 {
@@ -1803,6 +1854,9 @@ main.main-content {
 
 .slide-menu-content {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 80px 20px 20px;
   display: flex;
   flex-direction: column;

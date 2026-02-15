@@ -595,15 +595,19 @@ function renderMenuSections() {
     const grid = section.querySelector('.menu-grid')
     menus.forEach((menu) => {
       const effectivePrice = getEffectiveMenuPrice(menu)
+      const isSelected = register.isSelected(`${menu.name}${menu.category}`)
+      const customerIndex = register.getCurrentCustomerIndex()
+      const badgeNum = String(customerIndex + 1)
       const btn = document.createElement('button')
       btn.type = 'button'
-      btn.className = 'menu-btn' + (register.isSelected(`${menu.name}${menu.category}`) ? ' selected' : '')
+      btn.className = 'menu-btn' + (isSelected ? ' selected' : '')
       btn.dataset.name = menu.name
       btn.dataset.category = menu.category
       btn.dataset.colorCategory = getColorCategory(menu.name)
       btn.innerHTML = `
         <span class="menu-name">${escapeHtml(menu.name)}</span>
         <span class="menu-price">¥${effectivePrice.toLocaleString()}</span>
+        ${isSelected ? `<span class="customer-number-badge">${badgeNum}</span>` : ''}
       `
       btn.addEventListener('click', () => {
         const menuWithEffectivePrice = { ...menu, price_including_tax: effectivePrice, price: effectivePrice }
@@ -677,6 +681,7 @@ function closeSlideMenu() {
   document.getElementById('slideMenuOverlay').classList.remove('show')
   document.getElementById('hamburgerBtn').classList.remove('active')
   document.getElementById('hamburgerText').textContent = 'MENU'
+  document.body.classList.remove('modal-open')
 }
 
 function setupSlideMenu() {
@@ -684,9 +689,12 @@ function setupSlideMenu() {
   const hamburger = document.getElementById('hamburgerBtn')
   overlay?.addEventListener('click', (e) => { if (e.target === overlay) closeSlideMenu() })
   hamburger?.addEventListener('click', () => {
+    const isOpening = !overlay.classList.contains('show')
     overlay.classList.toggle('show')
     hamburger.classList.toggle('active')
     document.getElementById('hamburgerText').textContent = overlay.classList.contains('show') ? 'CLOSE' : 'MENU'
+    if (isOpening) document.body.classList.add('modal-open')
+    else document.body.classList.remove('modal-open')
   })
   overlay?.querySelectorAll('.slide-menu-item[data-action]').forEach((btn) => {
     btn.addEventListener('click', () => {
