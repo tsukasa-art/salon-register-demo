@@ -1,9 +1,15 @@
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useAuth } from '../composables/useAuth'
 import { useMenus } from '../composables/useMenus'
 import { useRegister } from '../composables/useRegister'
 import { getCategoryInfo } from '../data/categoryInfo'
+import SlideMenu from '../components/SlideMenu.vue'
+import DailyClosingModal from '../components/DailyClosingModal.vue'
+import DailyReportModal from '../components/DailyReportModal.vue'
+import WeeklyHistoryModal from '../components/WeeklyHistoryModal.vue'
+import BackupPlaceholderModal from '../components/BackupPlaceholderModal.vue'
+import ProductModal from '../components/ProductModal.vue'
 
 const auth = useAuth()
 const { menusByCategory, load } = useMenus()
@@ -25,20 +31,133 @@ const {
   formatPrice,
 } = useRegister()
 
-onMounted(() => load())
+const slideMenuOpen = ref(false)
+const dailyClosingOpen = ref(false)
+const dailyReportOpen = ref(false)
+const weeklyHistoryOpen = ref(false)
+const backupOpen = ref(false)
+const productModalOpen = ref(false)
+
+function closeSlideMenu() {
+  slideMenuOpen.value = false
+  document.body.style.overflow = ''
+}
+
+function openDailyClosing() {
+  closeSlideMenu()
+  dailyClosingOpen.value = true
+}
+function openWeeklyHistory() {
+  closeSlideMenu()
+  weeklyHistoryOpen.value = true
+}
+function openBackup() {
+  closeSlideMenu()
+  backupOpen.value = true
+}
+function handleSlideLogout() {
+  closeSlideMenu()
+  auth.logout()
+}
+
+function openDailyReport() {
+  dailyClosingOpen.value = false
+  dailyReportOpen.value = true
+}
+
+function handleClearComplete() {
+  if (!window.confirm('締め作業を完了しますか？\n\n今日の会計履歴・一時データが削除され、ページがリロードされます。\n※Supabaseのデータは保持されます。')) return
+  localStorage.removeItem('receipts')
+  localStorage.removeItem('accountingHistory')
+  dailyClosingOpen.value = false
+  setTimeout(() => window.location.reload(), 500)
+}
+
+watch(slideMenuOpen, (open) => {
+  document.body.style.overflow = open ? 'hidden' : ''
+})
+
+function onEsc(e) {
+  if (e.key !== 'Escape') return
+  if (slideMenuOpen.value) closeSlideMenu()
+  else if (dailyClosingOpen.value) dailyClosingOpen.value = false
+  else if (dailyReportOpen.value) dailyReportOpen.value = false
+  else if (weeklyHistoryOpen.value) weeklyHistoryOpen.value = false
+  else if (backupOpen.value) backupOpen.value = false
+  else if (productModalOpen.value) productModalOpen.value = false
+}
+
+onMounted(() => {
+  load()
+  window.addEventListener('keydown', onEsc)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onEsc)
+})
 </script>
 
 <template>
   <div class="main-view">
-    <header class="main-header">
+    <!-- デスクトップ用ヘッダー -->
+    <header class="main-header desktop-header">
       <h1>サロンレジ</h1>
       <nav class="header-actions">
+        <button type="button" class="link-btn" @click="dailyClosingOpen = true">締め作業</button>
         <button type="button" class="link-btn" @click="auth.logout()">ログアウト</button>
       </nav>
     </header>
+    <!-- モバイル用ヘッダー -->
+    <header class="main-header mobile-header">
+      <h1>サロンレジ</h1>
+      <button
+        type="button"
+        class="hamburger"
+        :class="{ active: slideMenuOpen }"
+        aria-label="メニュー"
+        @click="slideMenuOpen = !slideMenuOpen"
+      >
+        <span class="hamburger-text">{{ slideMenuOpen ? 'CLOSE' : 'MENU' }}</span>
+        <div class="hamburger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </header>
+
+    <SlideMenu
+      :open="slideMenuOpen"
+      @close="closeSlideMenu"
+      @daily-closing="openDailyClosing"
+      @weekly-history="openWeeklyHistory"
+      @backup="openBackup"
+      @logout="handleSlideLogout"
+    />
+    <DailyClosingModal
+      :open="dailyClosingOpen"
+      @close="dailyClosingOpen = false"
+      @report="openDailyReport"
+      @clear-complete="handleClearComplete"
+    />
+    <DailyReportModal :open="dailyReportOpen" @close="dailyReportOpen = false" />
+    <WeeklyHistoryModal :open="weeklyHistoryOpen" @close="weeklyHistoryOpen = false" />
+    <BackupPlaceholderModal :open="backupOpen" @close="backupOpen = false" />
+    <ProductModal
+      :open="productModalOpen"
+      @close="productModalOpen = false"
+      @add="(item) => { addItem(item); productModalOpen = false }"
+    />
 
     <div class="content-wrapper">
       <main class="main-content">
+        <section class="menu-section products-section">
+          <div class="section-header">
+            <h2>Products <span class="section-subtitle">商品</span></h2>
+          </div>
+          <button type="button" class="products-open-btn" @click="productModalOpen = true">
+            <span>商品リストを表示</span>
+          </button>
+        </section>
         <template v-for="cat in ['haircut', 'color', 'perm', 'option', 'offer']" :key="cat">
           <section v-if="menusByCategory[cat]?.length" class="menu-section">
             <div class="section-header">
@@ -133,6 +252,25 @@ onMounted(() => load())
   font-size: 1.25rem;
   color: #2d4a3a;
 }
+.desktop-header {
+  display: flex;
+}
+.mobile-header {
+  display: none;
+}
+@media (max-width: 768px) {
+  .desktop-header {
+    display: none;
+  }
+  .mobile-header {
+    display: flex;
+  }
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 .link-btn {
   background: none;
   border: none;
@@ -143,6 +281,39 @@ onMounted(() => load())
 }
 .link-btn:hover {
   text-decoration: underline;
+}
+.hamburger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  color: #2d4a3a;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hamburger-icon span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 0.2s;
+}
+.hamburger.active .hamburger-icon span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger.active .hamburger-icon span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active .hamburger-icon span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .content-wrapper {
@@ -205,6 +376,21 @@ onMounted(() => load())
 }
 .menu-name { font-weight: 500; }
 .menu-price { font-size: 0.8rem; color: #5a7464; }
+.products-section {
+  margin-bottom: 1rem;
+}
+.products-open-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d4e4d9;
+  border-radius: 8px;
+  background: #fff;
+  color: #5a8f6a;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.products-open-btn:hover {
+  background: #e8f5e9;
+}
 .service-note {
   margin-top: 1rem;
   font-size: 0.75rem;
