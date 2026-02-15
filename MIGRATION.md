@@ -1,14 +1,14 @@
 # サロンレジ 料金計算アプリ 移行ガイド
 
-既存の **salon-register-app**（Vanilla JS + Vite）から **salon-register-vue**（Vite + Vue + Vue Router）への移行手順です。このドキュメントに沿って順に進めます。
+既存の **salon-register-app**（Vanilla JS + Vite）から **salon-register**（Vite + Vue + Vue Router）への移行手順です。このドキュメントに沿って順に進めます。
 
 ---
 
 ## 1. 概要
 
-| 項目 | 既存（salon-register-app） | 移行先（salon-register-vue） |
-|------|-------------------------------|------------------------------|
-| 場所 | `salon-calc/salon-register-app/` | `develop/salon-register-vue/` |
+| 項目 | 既存（salon-register-app） | 移行先（salon-register） |
+|------|-------------------------------|--------------------------|
+| 場所 | `salon-calc/salon-register-app/` | `develop/salon-register/` |
 | フレームワーク | Vanilla JS + Vite | Vite + Vue 3 + Vue Router 4 |
 | 画面 | index.html + login.html（2ページ） | `/`（メイン）+ `/login`（ログイン） |
 | 認証・DB | Supabase（Auth + Postgres） | 同一 Supabase プロジェクトを利用 |
@@ -16,7 +16,7 @@
 
 ---
 
-## 2. 現在の salon-register-vue の状態
+## 2. 現在の salon-register の状態
 
 - **ルート**: `/` = メイン画面、`/login` = ログイン画面（ひな形のみ）
 - **依存**: Vue 3, Vue Router 4（Supabase は未導入）
@@ -101,6 +101,9 @@
 
 **成果**: インストール可能な PWA として動作。
 
+- 実装済み: `public/manifest.json`（theme_color: #5a8f6a）、`public/sw.js`（ネットワーク優先・Supabase はキャッシュしない）、本番のみ `main.js` で SW 登録。`index.html` に manifest / theme-color / apple-mobile-web-app メタを追加。
+- アイコン: `public/images/` に `android-chrome-192x192.png` と `android-chrome-512x512.png` を置くと「ホームに追加」時のアイコンが反映されます。既存プロジェクトの `images/` からコピー可能。
+
 ---
 
 ### Phase 6: スタイル・レスポンシブ
@@ -111,9 +114,11 @@
 |------|------|--------------|
 | 6.1 | 既存の `style.css` / `system-override.css` の変数やレイアウトを Vue 用に取り込む（グローバル or コンポーネント） | `style.css`, `system-override.css` |
 | 6.2 | メイン/ログインのヘッダー・ボタン・明細エリアのスタイルを合わせる | `style.css` の .main-header, .mobile-header 等 |
-| 6.3 | 災害復旧・バックアップ UI 用スタイルが必要なら移植 | `src/styles/disaster-recovery.css`, `backup-ui.css` |
+| 6.3 | レスポンシブ・レイアウト調整（768px/767px/480px、content-wrapper 1 列、スライドメニュー上部余白） | `style.css` のメディアクエリ |
 
 **成果**: 既存アプリと同等の見た目・操作性。
+
+- 実装済み: `src/style.css` に変数・ベース・メイン/ログイン/明細/ボタン/レスポンシブを移植。`SlideMenu.vue` に 767px 時の `padding-top: 100px` を追加。
 
 ---
 
@@ -165,4 +170,4 @@
 3. **Phase 3** まで完了 → レジとして最低限使える状態。  
 4. **Phase 4〜6** は必要に応じて順に追加。
 
-既存の salon-register-app は本番でそのまま運用し、salon-register-vue は別ブランチまたは別リポジトリで進め、動作が揃った時点で切り替える想定で問題ありません。
+既存の salon-register-app は本番でそのまま運用し、salon-register は別ブランチまたは別リポジトリで進め、動作が揃った時点で切り替える想定で問題ありません。

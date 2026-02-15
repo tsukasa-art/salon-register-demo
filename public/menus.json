@@ -1,0 +1,14 @@
+[
+  { "name": "カット", "category": "haircut", "display_order": 1, "price_including_tax": 4800 },
+  { "name": "幼児カット", "category": "haircut", "display_order": 2, "price_including_tax": 1800 },
+  { "name": "小・中学生カット", "category": "haircut", "display_order": 3, "price_including_tax": 2400 },
+  { "name": "高校生カット", "category": "haircut", "display_order": 4, "price_including_tax": 3200 },
+  { "name": "シャンプーカット", "category": "haircut", "display_order": 5, "price_including_tax": 5900 },
+  { "name": "前髪カット", "category": "haircut", "display_order": 6, "price_including_tax": 1000 },
+  { "name": "おしゃれ染め", "category": "color", "display_order": 10, "price_including_tax": 6600 },
+  { "name": "白髪染め (リタッチ)", "category": "color", "display_order": 11, "price_including_tax": 5900 },
+  { "name": "白髪染め (全体染め)", "category": "color", "display_order": 12, "price_including_tax": 6200 },
+  { "name": "ナチュラルパーマ", "category": "perm", "display_order": 20, "price_including_tax": 8200 },
+  { "name": "縮毛矯正", "category": "perm", "display_order": 21, "price_including_tax": 13500 },
+  { "name": "オプションA", "category": "option", "display_order": 30, "price_including_tax": 500 }
+]

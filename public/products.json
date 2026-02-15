@@ -1,0 +1,4 @@
+[
+  { "id": "p1", "name": "サンプル商品A", "price_including_tax": 1000, "category": "product" },
+  { "id": "p2", "name": "サンプル商品B", "price_including_tax": 2400, "category": "product" }
+]
