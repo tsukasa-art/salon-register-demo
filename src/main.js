@@ -261,23 +261,17 @@ function setupModals() {
       productModalGrid.innerHTML = list
         .map((p) => {
           const cartQty = getCartQuantity(p.id)
-          const cartIndicator =
-            cartQty > 0
-              ? `<div class="cart-status-indicator">カートに追加済み (${cartQty}個)</div>`
-              : ''
           return `<div class="product-modal-item" data-product-id="${escapeHtml(String(p.id))}">
               <div class="product-modal-info">
                 <div class="product-modal-name">${escapeHtml(p.name || '')}</div>
                 <div class="product-modal-price">¥${getEffectiveProductPrice(p).toLocaleString()}</div>
-                ${cartIndicator}
               </div>
               <div class="product-modal-controls">
                 <div class="product-modal-quantity-controls">
-                  <button type="button" class="product-modal-quantity-btn minus" data-product-id="${escapeHtml(String(p.id))}">−</button>
-                  <span class="product-modal-quantity-display" data-product-id="${escapeHtml(String(p.id))}">0</span>
+                  <button type="button" class="product-modal-quantity-btn minus" data-product-id="${escapeHtml(String(p.id))}" ${cartQty === 0 ? 'disabled' : ''}>−</button>
+                  <span class="product-modal-quantity-display" data-product-id="${escapeHtml(String(p.id))}">${cartQty}</span>
                   <button type="button" class="product-modal-quantity-btn plus" data-product-id="${escapeHtml(String(p.id))}">+</button>
                 </div>
-                <button type="button" class="product-modal-add-btn" data-product-id="${escapeHtml(String(p.id))}" disabled>追加</button>
               </div>
             </div>`
         })
@@ -288,38 +282,27 @@ function setupModals() {
           e.stopPropagation()
           const productId = btn.dataset.productId
           const isPlus = btn.classList.contains('plus')
-          const quantityDisplay = productModalGrid.querySelector(`.product-modal-quantity-display[data-product-id="${productId}"]`)
-          const addBtn = productModalGrid.querySelector(`.product-modal-add-btn[data-product-id="${productId}"]`)
-          let current = parseInt(quantityDisplay.textContent, 10) || 0
-          current = isPlus ? current + 1 : Math.max(0, current - 1)
-          quantityDisplay.textContent = String(current)
-          if (addBtn) addBtn.disabled = current === 0
-        })
-      })
-
-      productModalGrid.querySelectorAll('.product-modal-add-btn').forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation()
-          const productId = btn.dataset.productId
-          const quantityDisplay = productModalGrid.querySelector(`.product-modal-quantity-display[data-product-id="${productId}"]`)
-          const quantity = parseInt(quantityDisplay.textContent, 10) || 0
-          if (quantity <= 0) return
           const p = getAllProducts().find((x) => String(x.id) === productId)
           if (!p) return
+          
           const effectivePrice = getEffectiveProductPrice(p)
           const productWithPrice = { ...p, category: 'product', price_including_tax: effectivePrice, price: effectivePrice }
-          for (let i = 0; i < quantity; i++) {
+          
+          if (isPlus) {
+            // カートに追加
             register.addItem(productWithPrice)
+          } else {
+            // カートから削除
+            const items = register.getItems()
+            const targetItem = items.find((item) => item.productId === productId)
+            if (targetItem) {
+              register.removeItem(targetItem.id)
+            }
           }
-updateReceiptUI(register, opts)
-      renderMenuSections(register, refresh)
-      renderProductGrid(productSearchInput?.value ?? '')
-          btn.disabled = true
-          btn.style.opacity = '0.6'
-          setTimeout(() => {
-            btn.disabled = false
-            btn.style.opacity = '1'
-          }, 2000)
+          
+          updateReceiptUI(register, opts)
+          renderMenuSections(register, refresh)
+          renderProductGrid(productSearchInput?.value ?? '')
         })
       })
     }
@@ -369,7 +352,6 @@ updateReceiptUI(register, opts)
     if (qtyInput) qtyInput.value = '1'
     tempProductDialog?.showModal()
   })
-  document.getElementById('closeTempProductDialogBtn')?.addEventListener('click', () => tempProductDialog?.close())
   document.getElementById('cancelTempProductBtn')?.addEventListener('click', () => tempProductDialog?.close())
   document.getElementById('addTempProductBtn')?.addEventListener('click', () => {
     const nameInput = document.getElementById('tempProductName')

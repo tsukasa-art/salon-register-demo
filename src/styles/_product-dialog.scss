@@ -231,54 +231,6 @@
   color: var(--text-dark);
 }
 
-.product-modal-add-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 100px;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.product-modal-add-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--light-green) 0%, var(--primary-green) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-}
-
-.product-modal-add-btn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.product-modal-add-btn:disabled {
-  background: var(--text-light);
-  cursor: not-allowed;
-  opacity: 0.6;
-  transform: none;
-  box-shadow: none;
-}
-
-.cart-status-indicator {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--primary-green);
-  background: rgba(0, 0, 0, 0.08);
-  padding: 4px 8px;
-  border-radius: 12px;
-  margin-top: 4px;
-  display: inline-block;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-}
-
 .product-dialog .add-manual-btn {
   flex-shrink: 0;
   width: 36px;
@@ -331,28 +283,6 @@
   font-size: 20px;
   font-weight: 700;
   color: white;
-}
-
-.temp-product-modal .close-btn {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  color: white;
-  font-size: 20px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.temp-product-modal .close-btn:hover {
-  background: rgba(255, 255, 255, 0.5);
 }
 
 .temp-product-modal::backdrop {
