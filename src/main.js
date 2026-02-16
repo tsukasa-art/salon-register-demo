@@ -132,7 +132,7 @@ function setupModals() {
     })
     const dates = Object.keys(groupedByDate)
     const formatTime = (iso) => new Date(iso).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })
-    const html =
+    const contentHtml =
       dates.length === 0
         ? `
     <div class="empty-history">
@@ -213,6 +213,8 @@ function setupModals() {
         )
         .join('')}
     </div>
+    `
+    const html = contentHtml + `
     <div class="modal-actions" style="padding: 20px 24px;">
       <button type="button" class="main-action-btn" id="closeWeeklyHistoryBtn">閉じる</button>
     </div>
