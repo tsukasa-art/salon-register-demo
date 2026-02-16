@@ -94,8 +94,12 @@ function setupModals() {
           .join('')}
       </div>
     </div>
+    <div class="modal-actions">
+      <button type="button" class="main-action-btn" id="closeDailyReportBtn">閉じる</button>
+    </div>
     `
     document.getElementById('dailyReportContent').innerHTML = content
+    document.getElementById('closeDailyReportBtn')?.addEventListener('click', () => closeModal('dailyReportModal'))
     openModal('dailyReportModal')
   }
   document.getElementById('dailyReportBtn').addEventListener('click', openTodayReport)
@@ -108,7 +112,6 @@ function setupModals() {
     await db.clearAllReceipts()
     closeModal('dailyClosingModal')
   })
-  document.getElementById('closeReportBtn').addEventListener('click', () => closeModal('dailyReportModal'))
 
   async function renderWeeklyHistory() {
     const receipts = await db.getReceiptsLastDays(7)
@@ -210,10 +213,14 @@ function setupModals() {
         )
         .join('')}
     </div>
+    <div class="modal-actions" style="padding: 20px 24px;">
+      <button type="button" class="main-action-btn" id="closeWeeklyHistoryBtn">閉じる</button>
+    </div>
     `
     const container = document.getElementById('weeklyHistoryContent')
     if (!container) return
     container.innerHTML = html
+    container.querySelector('#closeWeeklyHistoryBtn')?.addEventListener('click', () => closeModal('weeklyHistoryModal'))
     container.querySelectorAll('.delete-btn-ios').forEach((btn) => {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation()
@@ -229,7 +236,6 @@ function setupModals() {
     await renderWeeklyHistory()
     openModal('weeklyHistoryModal')
   })
-  document.getElementById('closeHistoryBtn').addEventListener('click', () => closeModal('weeklyHistoryModal'))
 
   const productDialog = document.getElementById('productDialog')
   const productModalGrid = document.getElementById('productModalGrid')
