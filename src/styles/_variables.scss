@@ -1,0 +1,67 @@
+/* 変数・リセット・ベース */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px !important;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+body {
+  font-size: 16px !important;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: "SF Pro Display", "Helvetica Neue", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: linear-gradient(135deg, var(--pale-green) 0%, var(--soft-green) 100%);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding: 20px;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+:root {
+  --primary-green: #5a8f6a;
+  --light-green: #9bc47d;
+  --soft-green: #c8e6c9;
+  --pale-green: #e8f5e9;
+  --text-dark: #2d4a3a;
+  --text-medium: #5a7464;
+  --text-light: #86a091;
+  --bg-cream: #fafaf8;
+  --bg-white: #ffffff;
+  --border-light: #d4e4d9;
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --transition: all 0.3s ease;
+  --cut-color: #5a8f6a;
+  --color-color: #7a9f8a;
+  --perm-color: #6a8f7a;
+  --other-color: #8a9f7a;
+}
+
+a {
+  font-weight: 500;
+  color: var(--primary-green);
+  text-decoration: inherit;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+body.modal-open {
+  overflow: hidden;
+}

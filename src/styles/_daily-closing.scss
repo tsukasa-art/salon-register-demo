@@ -1,0 +1,411 @@
+/* ===================================
+   メインビュー・モーダル・スライドメニュー（本番と統一）
+   =================================== */
+
+.main-view {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* モバイルヘッダー内レイアウト */
+.mobile-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px 0 16px;
+  min-height: 56px;
+}
+
+.mobile-logo-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-green);
+}
+
+/* ハンバーガーボタン（本番と同じ学マス風・メインカラー） */
+.hamburger {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  width: 150px;
+  height: 50px;
+  padding: 0 20px;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 50%, var(--soft-green) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: white;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1002;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.hamburger:hover {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.hamburger:active {
+  transform: translateY(0);
+}
+
+.hamburger.active {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+}
+
+.hamburger-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: white;
+  line-height: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hamburger:hover .hamburger-text {
+  transform: scale(1.05);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger.active .hamburger-text {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 2本線アイコン＋開閉でX形 */
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 22px;
+  position: relative;
+}
+
+.hamburger-icon span {
+  display: block;
+  width: 100%;
+  height: 3.5px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+}
+
+.hamburger-icon span:nth-child(1) {
+  top: 5px;
+}
+
+.hamburger-icon span:nth-child(2) {
+  display: none;
+}
+
+.hamburger-icon span:nth-child(3) {
+  bottom: 5px;
+}
+
+.hamburger.active .hamburger-icon span:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.active .hamburger-icon span:nth-child(3) {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  transform: rotate(45deg);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.hamburger-icon::before {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger-icon::after {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.active .hamburger-icon::before,
+.hamburger.active .hamburger-icon::after {
+  opacity: 0;
+  transform: translateY(-50%) rotate(45deg) scale(0);
+}
+
+/* スライドメニュー（本番と同じオーバーレイ・パネル・項目） */
+.slide-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 998;
+}
+
+.slide-menu-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide-menu-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  max-width: 80vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 252, 248, 0.98) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-menu-overlay.show .slide-menu-panel {
+  right: 0;
+}
+
+.slide-menu-header {
+  display: none;
+}
+
+.slide-menu-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 80px 20px 28px 24px;
+  padding-bottom: max(28px, env(safe-area-inset-bottom, 28px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.slide-menu-content > * {
+  flex-shrink: 0;
+}
+
+.slide-menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.slide-menu-sub {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 12px;
+  margin-left: 24px;
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+.slide-menu-sub.open {
+  display: flex;
+}
+
+.slide-menu-parent .slide-menu-chevron {
+  font-size: 20px;
+  color: var(--text-light);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.slide-menu-parent[aria-expanded="true"] .slide-menu-chevron {
+  transform: rotate(90deg);
+}
+
+.slide-menu-child {
+  padding: 12px 16px;
+  font-size: 15px;
+  justify-content: flex-start;
+  margin-left: 0;
+  padding-left: 13px;
+}
+.slide-menu-item.slide-menu-child {
+  border-left: 3px solid var(--soft-green);
+}
+.slide-menu-child .menu-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+.slide-menu-child .menu-icon {
+  display: none;
+}
+
+.slide-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 20px 24px;
+  margin: 2px 0;
+  color: var(--text-dark);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1rem;
+  font-weight: 500;
+  background: white;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.slide-menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.04) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.slide-menu-item:hover::before,
+.slide-menu-item:active::before {
+  opacity: 1;
+}
+
+.slide-menu-item:active {
+  transform: translateX(8px);
+}
+
+.slide-menu-item .menu-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--light-green);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.slide-menu-item .menu-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.slide-menu-item .menu-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.slide-menu-item .menu-subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .slide-menu-content {
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hamburger {
+    width: 130px;
+    height: 46px;
+    padding: 0 18px;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+  .hamburger-icon {
+    width: 26px;
+    height: 20px;
+  }
+  .hamburger-icon span {
+    height: 3px;
+  }
+  .slide-menu-content {
+    padding-top: 90px;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.modal-overlay[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+.modal {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-medium);
+  border: 2px solid var(--soft-green);
+}
+.modal h2 {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+  color: var(--primary-green);
+}
+.modal p { margin: 0 0 16px; color: var(--text-medium); }
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+

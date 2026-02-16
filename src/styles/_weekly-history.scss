@@ -1,0 +1,502 @@
+/* ===================================
+   設定モーダル（テーマ色）
+   =================================== */
+.settings-modal {
+  max-width: 400px;
+  padding: 0;
+  overflow: hidden;
+}
+.settings-modal .modal-header {
+  background: var(--primary-green);
+  color: white;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.settings-modal .modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.settings-modal .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.settings-modal .close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+/* 価格・割引設定モーダル */
+.price-settings-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: min(420px, calc(100vw - 40px));
+  max-height: 90vh;
+  padding: 0;
+  overflow: hidden;
+}
+.price-settings-modal .modal-header {
+  flex-shrink: 0;
+  background: var(--primary-green);
+  color: white;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.price-settings-modal .modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.price-settings-modal .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.price-settings-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 24px;
+}
+.price-settings-note {
+  font-size: 12px;
+  color: var(--text-medium);
+  margin: 0 0 16px;
+}
+.price-settings-section {
+  margin-bottom: 20px;
+}
+.price-settings-section h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--text-dark);
+}
+.price-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.price-settings-row label {
+  flex: 0 0 180px;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+.price-settings-row input {
+  width: 120px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 16px;
+}
+.price-settings-modal .label-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: normal;
+}
+.price-settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.price-settings-content .price-settings-list {
+  max-height: none;
+  overflow-y: visible;
+}
+.price-settings-item {
+  display: grid;
+  grid-template-columns: 1fr auto 90px;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  min-width: 280px;
+}
+.price-settings-item-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.price-settings-base {
+  color: var(--text-medium);
+  font-size: 12px;
+}
+.price-settings-override {
+  padding: 6px 8px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.price-settings-modal .modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* 商品管理モーダル */
+.product-admin-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  max-height: 90vh;
+  padding: 0;
+  overflow: hidden;
+}
+.product-admin-modal .modal-header {
+  flex-shrink: 0;
+  background: var(--primary-green);
+  color: white;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-admin-modal .modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.product-admin-modal .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-admin-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+.product-admin-content .modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.product-admin-add-section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.product-admin-add-section h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--text-dark);
+}
+.product-admin-add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.product-admin-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.product-admin-input.product-admin-price {
+  width: 100px;
+}
+.product-admin-add-row .product-admin-input:first-of-type {
+  flex: 1;
+  min-width: 100px;
+}
+.product-admin-add-btn {
+  flex-shrink: 0;
+}
+#productAdminList.price-settings-list .price-settings-item.product-admin-item-custom {
+  grid-template-columns: 1fr auto 90px auto;
+}
+.product-admin-delete-btn {
+  padding: 6px 10px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px solid var(--text-light);
+  color: var(--text-medium);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.product-admin-delete-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-dark);
+}
+.product-admin-badge {
+  font-size: 10px;
+  color: var(--text-light);
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.settings-modal-content {
+  padding: 20px 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.settings-description {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--text-medium);
+}
+.theme-preset-section {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.theme-preset-section .theme-preset-label {
+  flex: 0 0 120px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0;
+}
+.theme-preset-custom {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+.theme-preset-trigger {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-white);
+  color: var(--text-dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+}
+.theme-preset-trigger:hover {
+  border-color: var(--primary-green);
+}
+.theme-preset-trigger[aria-expanded="true"] {
+  border-color: var(--primary-green);
+}
+.theme-preset-arrow {
+  font-size: 10px;
+  opacity: 0.7;
+}
+.theme-preset-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: var(--bg-white);
+  border: 2px solid var(--soft-green);
+  border-radius: 8px;
+  box-shadow: var(--shadow-medium);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+.theme-preset-option {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.theme-preset-option:hover {
+  background: var(--pale-green);
+}
+.theme-preset-option.is-selected {
+  background: var(--soft-green);
+  font-weight: 600;
+  color: var(--primary-green);
+}
+.theme-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.theme-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.theme-label {
+  flex: 0 0 120px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.theme-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.theme-color-input {
+  width: 48px;
+  height: 48px;
+  padding: 2px;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+}
+.theme-color-input:hover {
+  border-color: var(--primary-green);
+}
+.theme-hex {
+  font-size: 13px;
+  font-family: ui-monospace, monospace;
+  color: var(--text-medium);
+  min-width: 72px;
+}
+.theme-save-preset-section {
+  margin-bottom: 20px;
+}
+.theme-save-preset-section .theme-save-description {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text-medium);
+  line-height: 1.5;
+}
+.theme-save-preset-section .theme-save-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+.theme-save-preset-section .theme-save-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+}
+.theme-save-preset-section .theme-save-input:focus {
+  border-color: var(--primary-green);
+  outline: none;
+}
+.custom-presets-section {
+  margin-bottom: 20px;
+}
+.custom-presets-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.custom-presets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.custom-preset-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--pale-green);
+  border-radius: 8px;
+  border: 1px solid var(--soft-green);
+}
+.custom-preset-name {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-dark);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.custom-preset-apply {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 13px;
+  background: var(--primary-green);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.custom-preset-apply:hover {
+  filter: brightness(0.95);
+}
+.custom-preset-delete {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text-medium);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.custom-preset-delete:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-dark);
+}
+.settings-modal .modal-actions {
+  flex-direction: column;
+}
+

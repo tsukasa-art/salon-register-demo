@@ -76,8 +76,23 @@ export function createRegister() {
         items: [],
         buttonStates: new Map(),
       }
-      customers.push(customer)
-      currentCustomerIndex = customers.length - 1
+      
+      // 名前を入力した場合、アイテムが空のデフォルト顧客（お客様1等）を削除
+      if (customerName) {
+        const emptyDefaultIndex = customers.findIndex(c => 
+          c.items.length === 0 && /^お客様\d+$/.test(c.name)
+        )
+        if (emptyDefaultIndex !== -1) {
+          customers.splice(emptyDefaultIndex, 1)
+          // 削除した顧客より後ろにいた場合、currentCustomerIndex を調整
+          if (currentCustomerIndex > emptyDefaultIndex) {
+            currentCustomerIndex--
+          }
+        }
+      }
+      
+      customers.unshift(customer)  // 先頭に追加
+      currentCustomerIndex = 0  // 新規顧客を選択
     },
 
     addInitialCustomer() {

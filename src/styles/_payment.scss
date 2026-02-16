@@ -1,0 +1,223 @@
+/* ===================================
+   合計・お預かり・ボタン
+   =================================== */
+
+.total-section {
+  border-top: 2px solid var(--soft-green);
+  padding-top: 20px;
+  margin-top: auto;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 15px !important;
+}
+
+.total-row.subtotal,
+.total-row.tax {
+  color: var(--text-medium);
+}
+
+.total-row.total {
+  font-size: 28px !important;
+  font-weight: 600;
+  color: var(--primary-green);
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid var(--light-green);
+  letter-spacing: -0.3px;
+}
+
+.payment-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid var(--soft-green);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-box {
+  background: var(--pale-green);
+  border: 2px solid var(--soft-green);
+  border-radius: 12px;
+  padding: 20px 24px;
+  transition: all 0.3s ease;
+}
+
+.payment-box:focus-within {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.payment-label {
+  display: block;
+  font-size: 16px !important;
+  font-weight: 600;
+  color: var(--text-medium);
+  margin-bottom: 12px;
+}
+
+.quick-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.quick-btn,
+.quick-amount-btn {
+  padding: 16px 12px;
+  background: #fff;
+  border: 2px solid var(--soft-green);
+  border-radius: 10px;
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-btn:hover,
+.quick-amount-btn:hover {
+  background: var(--soft-green);
+  border-color: var(--primary-green);
+}
+
+.payment-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 34px !important;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: right;
+  outline: none;
+  padding: 18px 0;
+  min-height: 70px;
+}
+
+.payment-input::-webkit-outer-spin-button,
+.payment-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.payment-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.change-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, var(--pale-green) 0%, var(--soft-green) 100%);
+  border-radius: 12px;
+}
+
+.change-label {
+  font-size: 18px !important;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.change-amount {
+  font-size: 32px !important;
+  color: var(--primary-green);
+  font-weight: 700;
+}
+
+.main-action-btn {
+  width: 100%;
+  padding: 16px 0;
+  background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 18px !important;
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  margin-top: 18px;
+  transition: all 0.2s ease;
+}
+
+.main-action-btn:hover {
+  background: linear-gradient(135deg, var(--primary-green) 80%, var(--soft-green));
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-1px);
+}
+
+.clear-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--pale-green);
+  color: var(--primary-green);
+  border: 2px solid var(--soft-green);
+  border-radius: var(--radius-md);
+  font-size: 15px !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 16px;
+}
+
+.clear-btn:hover {
+  background: var(--soft-green);
+  border-color: var(--light-green);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* 履歴ボタン（本番に合わせる） */
+.secondary-action-btn {
+  width: 100%;
+  padding: 13px 0;
+  background: var(--pale-green);
+  color: var(--primary-green);
+  border: 2px solid var(--soft-green);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondary-action-btn:hover {
+  background: var(--light-green);
+  color: white;
+  border-color: var(--primary-green);
+}
+
+/* 今日の売上を確認ボタン（テーマ変数でカスタマイズ可能） */
+.report-action-btn {
+  width: 100%;
+  padding: 15px 0;
+  background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s ease;
+}
+
+.report-action-btn:hover {
+  filter: brightness(0.95);
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-1px);
+}
+
+.report-action-btn:active {
+  transform: translateY(0);
+}
+

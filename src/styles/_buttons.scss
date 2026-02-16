@@ -1,0 +1,165 @@
+/* ===================================
+   過去履歴モーダル（1週間分）
+   =================================== */
+.weekly-history-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-white);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+  z-index: 1100;
+}
+.weekly-history-modal .modal-header {
+  background: var(--primary-green);
+  color: white;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.weekly-history-modal .modal-header h2 { margin: 0; font-size: 20px; font-weight: 700; }
+.weekly-history-modal .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.weekly-history-modal .close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+.weekly-history-modal .modal-content {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.weekly-history-list { display: flex; flex-direction: column; gap: 20px; }
+.date-group { margin-bottom: 20px; }
+.date-header-ios {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+  color: white;
+  padding: 20px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.date-title-ios { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.date-stats-ios { display: flex; justify-content: space-between; align-items: center; }
+.count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.total-amount { font-size: 20px; font-weight: 700; }
+.receipts-list { padding: 0; }
+.receipt-card-ios {
+  background: var(--pale-green);
+  border-radius: 12px;
+  margin-bottom: 6px;
+  border: 1px solid var(--soft-green);
+  overflow: hidden;
+}
+.receipt-card-ios .card-content {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 12px;
+}
+.receipt-card-ios .receipt-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.receipt-card-ios .time-badge {
+  background: var(--soft-green);
+  color: var(--primary-green);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: center;
+  align-self: flex-start;
+}
+.receipt-card-ios .item-info { flex: 1; }
+.receipt-card-ios .item-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+.receipt-card-ios .item-price { font-size: 18px; font-weight: 700; color: var(--primary-green); }
+.receipt-card-ios .item-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 16px;
+}
+.receipt-card-ios .item-row .item-name { font-size: 16px; font-weight: 500; margin-bottom: 0; }
+.receipt-card-ios .item-row .item-price { font-size: 16px; font-weight: 600; text-align: left; }
+.receipt-divider {
+  height: 1px;
+  background: var(--soft-green);
+  margin: 12px 0;
+}
+.weekly-history-modal .receipt-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.weekly-history-modal .summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.weekly-history-modal .summary-row.total-row {
+  font-weight: 700;
+  padding-top: 6px;
+  border-top: 1px solid var(--soft-green);
+}
+.weekly-history-modal .summary-label { color: var(--text-dark); }
+.weekly-history-modal .summary-value { font-weight: 600; color: var(--primary-green); }
+.receipt-card-ios .delete-btn-ios {
+  background: var(--soft-green);
+  border: 1px solid var(--primary-green);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--primary-green);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+.receipt-card-ios .delete-btn-ios:active {
+  transform: scale(0.95);
+  background: var(--primary-green);
+  color: white;
+}
+.empty-history {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+}
+.empty-history .empty-icon { margin-bottom: 16px; opacity: 0.5; }
+.empty-history h3 { margin: 0 0 8px; font-size: 18px; color: var(--text-dark); }
+.empty-history p { margin: 0; font-size: 14px; }
+

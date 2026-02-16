@@ -9,6 +9,14 @@ Vite + Vanilla JS で構成し、バックエンドなしで **JSON と IndexedD
 - **Vanilla JavaScript**（フレームワークなし）
 - **データ**: メニュー・商品は `public/menus.json` / `public/products.json`、会計履歴は **IndexedDB**
 
+### モック（TypeScript + SCSS + Tailwind CSS）
+
+本番の `main.js` / `style.css` とは別に、**モック**を用意しています。TypeScript・SCSS・Tailwind CSS で構成し、デバッグしやすい小さい単位でレジUIを試せます。
+
+- **エントリ**: `mock.html` → `src/mock/main.ts` + `src/mock/styles/main.scss`
+- **起動**: `pnpm run dev` のあと、ブラウザで `http://localhost:5173/mock.html` を開く
+- **ビルド**: `pnpm run build` に含まれ、`dist/mock.html` に出力されます
+
 ## 主な機能
 
 - レジ操作（複数顧客・メニュー/商品選択・合計・お預かり・お釣り・会計確定）

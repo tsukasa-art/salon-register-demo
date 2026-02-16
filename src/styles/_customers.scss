@@ -1,0 +1,120 @@
+/* ===================================
+   顧客リスト（本番に合わせる）
+   =================================== */
+
+.customer-list {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--soft-green);
+}
+
+.customer-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.customer-list-header h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-green);
+  margin: 0;
+}
+
+.add-customer-btn {
+  background: var(--light-green);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.add-customer-btn:hover {
+  background: var(--primary-green);
+  transform: translateY(-1px);
+}
+
+.customer-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.customer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--pale-green);
+  border: 2px solid var(--soft-green);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.customer-item:hover {
+  background: var(--soft-green);
+  border-color: var(--light-green);
+}
+
+.customer-item.active {
+  background: var(--light-green);
+  border-color: var(--primary-green);
+  color: white;
+}
+
+.customer-info {
+  flex: 1;
+}
+
+.customer-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.customer-items-count {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.remove-customer-btn {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef5350;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.remove-customer-btn:hover {
+  background: #ef5350;
+  color: white;
+}
+
+.add-customer-input {
+  margin-top: 8px;
+}
+
+.add-customer-input input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  box-sizing: border-box;
+}
+

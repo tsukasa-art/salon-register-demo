@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>サロンレジ デモログイン</title>
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="stylesheet" href="/src/style.scss" />
 </head>
-<body>
+<body class="login-page">
   <div class="login-view">
     <header class="login-header">
       <h1>レジ</h1>
@@ -15,7 +15,7 @@
     </header>
     <main class="login-content">
       <h2>デモログイン</h2>
-      <p class="login-description">下のボタンでメイン画面へ進みます。認証はありません。</p>
+      <p class="login-description">下のボタンでメイン画面へ進みます。<br>認証はありません。</p>
       <form class="login-form" id="loginForm">
         <div id="errorMessage" class="error-message" style="display: none;"></div>
         <button type="submit" class="login-btn" id="loginBtn">デモで始める</button>

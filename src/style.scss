@@ -1,0 +1,34 @@
+/**
+ * メインスタイル（SCSS モジュール化）
+ * 各パーシャルを機能別に分割
+ */
+
+// 基礎: 変数・カスタムプロパティ
+@use 'styles/variables';
+
+// レイアウト: グリッド・ヘッダー・メインコンテンツ・セクション
+@use 'styles/layout';
+
+// コンポーネント: レシート・支払い・顧客リスト
+@use 'styles/receipt';
+@use 'styles/payment';
+@use 'styles/customers';
+
+// 商品ダイアログ
+@use 'styles/product-dialog';
+
+// スライドメニュー
+@use 'styles/slide-menu';
+
+// モーダル: テーマ設定・日次締め・週次履歴・管理者
+@use 'styles/theme-settings';
+@use 'styles/daily-closing';
+@use 'styles/weekly-history';
+@use 'styles/admin-modal';
+@use 'styles/modal-base';
+
+// UI 要素: ボタン
+@use 'styles/buttons';
+
+// レスポンシブ: メディアクエリ
+@use 'styles/responsive';

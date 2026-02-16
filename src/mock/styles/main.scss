@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+// モック用カスタム変数（本番のテーマに合わせる）
+:root {
+  --primary-green: #5a8f6a;
+  --light-green: #9bc47d;
+  --soft-green: #c8e6c9;
+  --pale-green: #e8f5e9;
+  --text-dark: #2d4a3a;
+  --border-light: #d4e4d9;
+  --radius-lg: 18px;
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+// モック専用のコンポーネント（必要に応じて SCSS で拡張）
+.mock-section {
+  &__header {
+    @apply flex items-baseline gap-3 pb-4 mb-6 border-b-2 border-[var(--soft-green)];
+  }
+  &__title {
+    @apply text-xl font-semibold tracking-tight text-[var(--primary-green)];
+  }
+  &__subtitle {
+    @apply text-sm text-gray-500 font-normal;
+  }
+}
