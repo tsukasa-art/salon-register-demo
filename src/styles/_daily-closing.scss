@@ -396,6 +396,41 @@
   box-shadow: var(--shadow-medium);
   border: 2px solid var(--soft-green);
 }
+
+/* 締め作業モーダル：緑ヘッダー＋白字タイトル */
+.daily-closing-modal {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.daily-closing-modal .modal-header {
+  flex-shrink: 0;
+  background: var(--primary-green);
+  color: white;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.daily-closing-modal .modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+.daily-closing-modal .modal-content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+.daily-closing-modal .modal-content p {
+  margin: 0 0 16px;
+  color: var(--text-medium);
+}
+
 .modal h2 {
   margin: 0 0 16px;
   font-size: 1.25rem;
@@ -407,5 +442,145 @@
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
+}
+
+/* ===================================
+   統計セクション（ランキング・ピーク時間帯）
+   =================================== */
+.report-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid var(--soft-green);
+}
+
+.report-section h3 {
+  font-size: 18px !important;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.ranking-list,
+.peak-hours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ranking-item,
+.peak-hour-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--pale-green);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--primary-green);
+  transition: var(--transition);
+}
+
+.ranking-item:hover,
+.peak-hour-item:hover {
+  background: var(--soft-green);
+  transform: translateX(2px);
+}
+
+.ranking-number {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-green);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.ranking-name {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.ranking-count,
+.peak-count {
+  font-size: 14px;
+  color: var(--text-medium);
+}
+
+.ranking-total,
+.peak-total {
+  font-weight: 700;
+  color: var(--primary-green);
+  text-align: right;
+}
+
+.peak-hour {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ===================================
+   タブレット・デスクトップ対応
+   =================================== */
+
+/* タブレット（768px以上） */
+@media (min-width: 768px) {
+  .daily-closing-modal {
+    max-width: 600px;
+  }
+
+  .daily-report-modal {
+    max-width: 700px;
+    max-height: 88vh;
+  }
+
+  .daily-report-modal .modal-content {
+    max-height: 73vh;
+  }
+
+  .report-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* デスクトップ（1024px以上） */
+@media (min-width: 1024px) {
+  .daily-closing-modal {
+    max-width: 650px;
+  }
+
+  .daily-report-modal {
+    max-width: 900px;
+    max-height: 95vh;
+  }
+
+  .daily-report-modal .modal-content {
+    max-height: 83vh;
+  }
+
+  .daily-report-content {
+    padding: 24px 32px;
+  }
+
+  .report-cards {
+    gap: 20px;
+  }
+
+  .report-section {
+    padding: 24px;
+  }
+
+  .report-section h3 {
+    font-size: 20px !important;
+    margin-bottom: 20px;
+  }
+
+  .ranking-list,
+  .peak-hours-list {
+    gap: 12px;
+  }
 }
 

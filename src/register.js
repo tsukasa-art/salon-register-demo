@@ -190,5 +190,57 @@ export function createRegister() {
         category: i.category,
       }))
     },
+
+    // 全顧客の合計金額（まとめて会計用）
+    getAllCustomersTotal() {
+      let total = 0
+      customers.forEach((customer) => {
+        const items = customer.items
+        let sum = 0
+        const offer = items.find((i) => i.category === 'offer')
+        items.forEach((item) => { sum += effectivePrice(item, items) })
+        if (offer) {
+          if (offer.discountType === 'percentage') sum = Math.round(sum * (1 - Math.abs(offer.price) / 100))
+          else if (offer.discountType === 'fixed') sum = Math.max(0, sum + offer.price)
+        }
+        total += sum
+      })
+      return total
+    },
+
+    // 全顧客のアイテム（まとめて会計用）
+    getAllCustomersItemsForSave() {
+      const allItems = []
+      customers.forEach((customer) => {
+        customer.items.forEach((item) => {
+          allItems.push({
+            name: item.name,
+            price: effectivePrice(item, customer.items),
+            category: item.category,
+            customerName: customer.name,
+          })
+        })
+      })
+      return allItems
+    },
+
+    // 全顧客をクリア（まとめて会計後）
+    clearAllCustomers() {
+      customers.forEach((c) => {
+        c.items = []
+        c.buttonStates.clear()
+      })
+      this.setPaymentAmount(0)
+    },
+
+    // 現在の顧客のみクリア（個別会計後）
+    clearCurrentCustomer() {
+      const cur = getCurrent()
+      if (cur) {
+        cur.items = []
+        cur.buttonStates.clear()
+      }
+      this.setPaymentAmount(0)
+    },
   }
 }

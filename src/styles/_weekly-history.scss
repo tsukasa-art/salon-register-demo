@@ -11,13 +11,15 @@
   color: white;
   padding: 20px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .settings-modal .modal-header h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
+  color: white;
+  text-align: center;
 }
 .settings-modal .close-btn {
   background: rgba(255, 255, 255, 0.2);
@@ -54,13 +56,15 @@
   color: white;
   padding: 20px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .price-settings-modal .modal-header h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
+  color: white;
+  text-align: center;
 }
 .price-settings-modal .close-btn {
   background: rgba(255, 255, 255, 0.2);
@@ -173,7 +177,7 @@
 .product-admin-modal {
   display: flex;
   flex-direction: column;
-  max-width: 420px;
+  max-width: 480px;
   max-height: min(90vh, calc(100dvh - 40px));
   padding: 0;
   overflow: hidden;
@@ -184,13 +188,15 @@
   color: white;
   padding: 20px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .product-admin-modal .modal-header h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
+  color: white;
+  text-align: center;
 }
 .product-admin-modal .close-btn {
   background: rgba(255, 255, 255, 0.2);
@@ -247,7 +253,7 @@
   font-size: 14px;
 }
 .product-admin-input.product-admin-price {
-  width: 100px;
+  width: 130px;
 }
 .product-admin-add-row .product-admin-input:first-of-type {
   flex: 1;
@@ -284,6 +290,14 @@
   max-height: 70vh;
   overflow-y: auto;
 }
+
+.section-title {
+  font-size: 18px !important;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 8px 0;
+}
+
 .settings-description {
   margin: 0 0 16px;
   font-size: 14px;
@@ -508,5 +522,118 @@
 }
 .settings-modal .modal-actions {
   flex-direction: column;
+  padding: 0 24px 24px 24px;
+}
+
+/* ===================================
+   タブレット・デスクトップ対応
+   =================================== */
+
+/* タブレット（768px以上） */
+@media (min-width: 768px) {
+  /* 設定モーダル（テーマ・データ管理） */
+  .settings-modal {
+    max-width: 600px;
+  }
+  
+  .settings-modal-content {
+    max-height: 75vh;
+  }
+
+  /* 価格・割引設定モーダル */
+  .price-settings-modal {
+    max-width: 700px;
+  }
+
+  /* 商品管理モーダル */
+  .product-admin-modal {
+    max-width: 700px;
+  }
+
+  .product-admin-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* 過去の履歴モーダル */
+  .weekly-history-modal {
+    max-width: 560px;
+    max-height: 88vh;
+  }
+
+  .weekly-history-modal .modal-content {
+    max-height: 73vh;
+  }
+}
+
+/* デスクトップ（1024px以上） */
+@media (min-width: 1024px) {
+  /* 設定モーダル（テーマ・データ管理） */
+  .settings-modal {
+    max-width: 700px;
+  }
+
+  .theme-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 20px;
+  }
+
+  .theme-row {
+    margin-bottom: 0;
+  }
+
+  /* 価格・割引設定モーダル */
+  .price-settings-modal {
+    max-width: 800px;
+  }
+
+  .price-settings-content {
+    padding: 24px 32px;
+  }
+
+  .price-settings-row {
+    gap: 16px;
+  }
+
+  .price-settings-row label {
+    flex: 0 0 200px;
+  }
+
+  .price-settings-row input {
+    width: 140px;
+  }
+
+  /* 商品管理モーダル */
+  .product-admin-modal {
+    max-width: 850px;
+  }
+
+  .product-admin-content {
+    padding: 24px 32px;
+  }
+
+  .product-admin-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* 過去の履歴モーダル */
+  .weekly-history-modal {
+    max-width: 560px;
+    max-height: 95vh;
+  }
+
+  .weekly-history-modal .modal-content {
+    max-height: 82vh;
+  }
+
+  .weekly-history-content {
+    padding: 24px 32px;
+  }
+
+  .day-section {
+    padding: 20px;
+  }
 }
 

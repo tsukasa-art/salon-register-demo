@@ -84,19 +84,29 @@
               </button>
             </div>
           </div>
-          <!-- 環境設定（単体） -->
-          <button type="button" class="slide-menu-item" data-action="settings">
-            <div class="menu-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-              </svg>
+          <!-- 環境設定（親） -->
+          <div class="slide-menu-group">
+            <button type="button" class="slide-menu-item slide-menu-parent" data-expand="settings" aria-expanded="false">
+              <div class="menu-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </div>
+              <div class="menu-text">
+                <span class="menu-title">環境設定</span>
+              </div>
+              <span class="slide-menu-chevron" aria-hidden="true">›</span>
+            </button>
+            <div class="slide-menu-sub" data-sub="settings">
+              <button type="button" class="slide-menu-item slide-menu-child" data-action="theme-settings">
+                <span class="menu-title">テーマ設定</span>
+              </button>
+              <button type="button" class="slide-menu-item slide-menu-child" data-action="data-management">
+                <span class="menu-title">データ管理</span>
+              </button>
             </div>
-            <div class="menu-text">
-              <span class="menu-title">環境設定</span>
-              <span class="menu-subtitle">色のカスタマイズ</span>
-            </div>
-          </button>
+          </div>
           <!-- ログアウト（単体） -->
           <button type="button" class="slide-menu-item" data-action="logout">
             <div class="menu-icon">
@@ -166,7 +176,9 @@
               <span class="change-amount" id="changeText">¥0</span>
             </div>
           </div>
-          <button type="button" class="main-action-btn" id="checkoutBtn">会計確定</button>
+          <div id="checkoutButtons" class="checkout-buttons">
+            <button type="button" class="main-action-btn" id="checkoutBtn">会計確定</button>
+          </div>
           <button type="button" class="clear-btn" id="clearBtn">すべてクリア</button>
           <button type="button" class="secondary-action-btn" id="historyBtn">履歴</button>
           <button type="button" class="report-action-btn" id="dailyReportBtnAside">今日の売上を確認</button>
@@ -176,13 +188,17 @@
   </div>
 
   <div class="modal-overlay" id="dailyClosingModal" aria-hidden="true">
-    <div class="modal">
-      <h2>締め作業</h2>
+    <div class="modal daily-closing-modal">
+      <div class="modal-header">
+        <h2>締め作業</h2>
+      </div>
+      <div class="modal-content">
       <p>日次レポートの確認や、本日の一時データをクリアできます。</p>
       <div class="modal-actions">
         <button type="button" class="main-action-btn" id="dailyReportBtn">日次レポートを表示</button>
         <button type="button" class="clear-btn" id="clearTodayBtn">本日データをクリア</button>
         <button type="button" class="link-btn" id="closeClosingBtn">閉じる</button>
+      </div>
       </div>
     </div>
   </div>
@@ -205,10 +221,10 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="settingsModal" aria-hidden="true">
+  <div class="modal-overlay" id="themeModal" aria-hidden="true">
     <div class="modal settings-modal">
       <div class="modal-header">
-        <h2>設定</h2>
+        <h2>テーマ設定</h2>
       </div>
       <div class="settings-modal-content">
         <p class="settings-description">プリセットを選ぶか、色を変更してカスタムプリセットとして保存できます。</p>
@@ -299,8 +315,31 @@
       <div class="modal-actions">
         <button type="button" class="main-action-btn" id="themeSavePresetBtn">現在のテーマを保存</button>
         <button type="button" class="clear-btn" id="themeResetBtn">デフォルトに戻す</button>
-        <button type="button" class="main-action-btn" id="closeSettingsBtn">閉じる</button>
+        <button type="button" class="main-action-btn" id="closeThemeModalBtn">閉じる</button>
       </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="dataManagementModal" aria-hidden="true">
+    <div class="modal settings-modal">
+      <div class="modal-header">
+        <h2>データ管理</h2>
+      </div>
+      <div class="settings-modal-content">
+        <p class="settings-description">会計履歴をJSONファイルに保存したり、以前保存したファイルから復元できます。</p>
+        <div class="backup-warning">
+          <strong>⚠️ 復元時の注意</strong>
+          <p>復元すると現在のデータ（すべての会計履歴）が削除され、ファイルの内容に置き換わります。この操作は取り消せません。</p>
+        </div>
+        <div class="backup-actions">
+          <button type="button" class="secondary-action-btn backup-btn" id="exportDataBtn">バックアップ</button>
+          <button type="button" class="secondary-action-btn backup-btn" id="importDataBtn">復元</button>
+          <input type="file" id="importDataInput" accept=".json" style="display: none;" />
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="main-action-btn" id="closeDataManagementBtn">閉じる</button>
       </div>
     </div>
   </div>
@@ -411,6 +450,28 @@
       </div>
     </div>
   </dialog>
+
+  <!-- カスタムアラートモーダル -->
+  <div class="modal-overlay" id="alertModal" aria-hidden="true">
+    <div class="modal alert-modal">
+      <div class="alert-icon">⚠️</div>
+      <h3 id="alertTitle">通知</h3>
+      <p id="alertMessage"></p>
+      <button type="button" class="main-action-btn" id="alertCloseBtn">OK</button>
+    </div>
+  </div>
+
+  <!-- カスタム確認モーダル -->
+  <div class="modal-overlay" id="confirmModal" aria-hidden="true">
+    <div class="modal confirm-modal">
+      <h3 id="confirmTitle">確認</h3>
+      <p id="confirmMessage"></p>
+      <div class="modal-actions">
+        <button type="button" class="clear-btn" id="confirmCancelBtn">キャンセル</button>
+        <button type="button" class="main-action-btn" id="confirmOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

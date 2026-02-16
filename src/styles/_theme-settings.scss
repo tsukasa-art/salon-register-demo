@@ -195,3 +195,67 @@
   }
 }
 
+/* ===================================
+   バックアップセクション
+   =================================== */
+.backup-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid var(--soft-green);
+}
+
+.backup-title {
+  font-size: 17px !important;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 12px 0;
+}
+
+.backup-description {
+  font-size: 14px !important;
+  color: var(--text-medium);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.backup-description strong {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.backup-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.backup-btn {
+  flex: 1;
+  min-width: 140px;
+  margin-top: 0;
+}
+
+/* 警告セクション（データ管理モーダル用） */
+.backup-warning {
+  margin: 16px 0 24px;
+  padding: 16px;
+  background: #fff3e0;
+  border-left: 4px solid #f57c00;
+  border-radius: var(--radius-sm);
+}
+
+.backup-warning strong {
+  display: block;
+  font-size: 15px !important;
+  font-weight: 700;
+  color: #e65100;
+  margin-bottom: 8px;
+}
+
+.backup-warning p {
+  font-size: 14px !important;
+  color: #5d4037;
+  line-height: 1.6;
+  margin: 0;
+}
+

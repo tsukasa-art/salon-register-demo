@@ -75,10 +75,7 @@
 }
 
 .receipt-item {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  gap: 12px;
+  position: relative;
   padding: 16px 16px 16px 8px;
   margin-bottom: 10px;
   background: var(--pale-green);
@@ -86,6 +83,22 @@
   border-left: 3px solid var(--light-green);
   transition: var(--transition);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* シンプル表示（施術メニュー用） */
+.receipt-item-single {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding-right: 40px; /* 右上の×ボタン用のスペース確保 */
+}
+
+/* グループ化表示（商品用） */
+.receipt-item-grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .receipt-item:hover {
@@ -110,26 +123,119 @@
 
 .remove-item,
 .remove-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
   background: #ff4757;
   color: white;
-  border: none;
-  width: 32px;
-  height: 32px;
+  border: 2px solid white;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 2px 4px rgba(255, 71, 87, 0.3);
+  box-shadow: 0 2px 6px rgba(255, 71, 87, 0.4);
+  z-index: 1;
 }
 
 .remove-item:hover,
 .remove-btn:hover {
   background: #ff3742;
-  transform: scale(1.1);
+  transform: scale(1.15);
+  box-shadow: 0 3px 8px rgba(255, 71, 87, 0.5);
+}
+
+/* グループ化表示用のスタイル */
+.receipt-item-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.receipt-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 4px;
+}
+
+.receipt-quantity-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-green);
+  background: var(--bg-white);
+  color: var(--primary-green);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.receipt-quantity-btn:hover:not(:disabled) {
+  background: var(--pale-green);
+  transform: scale(1.05);
+}
+
+.receipt-quantity-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.receipt-quantity-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--border-light);
+  color: var(--text-light);
+}
+
+.receipt-quantity-display {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  min-width: 32px;
+  text-align: center;
+}
+
+.remove-item-all {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: #ff4757;
+  color: white;
+  font-size: 14px !important;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(255, 71, 87, 0.4);
+  z-index: 1;
+}
+
+.remove-item-all:hover {
+  background: #ff3742;
+  transform: scale(1.15);
+  box-shadow: 0 3px 8px rgba(255, 71, 87, 0.5);
+}
+
+.remove-item-all::before {
+  content: '×';
 }
 

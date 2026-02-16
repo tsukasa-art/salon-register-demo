@@ -21,14 +21,13 @@
 @use 'styles/slide-menu';
 
 // モーダル: テーマ設定・日次締め・週次履歴・管理者
+// ※ buttons を weekly-history より前に読み込む（過去履歴モーダルの幅は buttons で定義し、weekly-history のメディアクエリで上書きできるようにする）
 @use 'styles/theme-settings';
 @use 'styles/daily-closing';
+@use 'styles/buttons';
 @use 'styles/weekly-history';
 @use 'styles/admin-modal';
 @use 'styles/modal-base';
-
-// UI 要素: ボタン
-@use 'styles/buttons';
 
 // レスポンシブ: メディアクエリ
 @use 'styles/responsive';

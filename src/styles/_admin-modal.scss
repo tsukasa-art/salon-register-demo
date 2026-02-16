@@ -12,7 +12,7 @@
   padding: 0;
   min-width: 320px;
   max-width: 95vw;
-  max-height: 85vh;
+  max-height: 88vh;
   overflow: hidden;
   z-index: 1100;
   display: flex;
@@ -31,6 +31,7 @@
   font-size: 20px;
   font-weight: 700;
   flex: 1;
+  color: white;
   text-align: center;
 }
 .daily-report-header .close-btn {

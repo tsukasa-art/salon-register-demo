@@ -5,14 +5,15 @@ import * as db from './db.js'
 import { initTheme } from './modules/theme.js'
 import { setupSettingsModal } from './modules/settingsModal.js'
 import { refreshThemeForm, refreshPresetSelect, refreshCustomPresetsList } from './modules/theme.js'
-import { openModal, closeModal, escapeHtml } from './modules/utils.js'
+import { openModal, closeModal, openDialog, closeDialog, escapeHtml, showAlert, showConfirm } from './modules/utils.js'
 import { closeSlideMenu, setupSlideMenu } from './modules/slideMenu.js'
 import { menusByCategory, loadMenus, loadProducts, getCustomProducts, saveCustomProducts, getAllProducts } from './modules/store.js'
 import { getPriceSettings, savePriceSettings, getMenuPriceKey, getEffectiveMenuPrice, getEffectiveProductPrice, DEFAULT_PRICE_SETTINGS } from './modules/priceSettings.js'
 import { updateReceiptUI, renderCustomerList } from './modules/receiptUI.js'
 import { renderMenuSections } from './modules/menu.js'
 import { showCheckoutCompletePopup } from './modules/checkoutPopup.js'
-import { setupPaymentAndCheckout } from './modules/payment.js'
+import { setupPaymentAndCheckout, updateCheckoutButtons } from './modules/payment.js'
+import { setupKeyboardShortcuts } from './modules/keyboardShortcuts.js'
 
 if (!requireAuth()) throw new Error('redirecting to login')
 
@@ -23,6 +24,7 @@ function refresh () {
   updateReceiptUI(register, opts)
   renderMenuSections(register, refresh)
   renderCustomerList(register, refresh)
+  updateCheckoutButtons(register, refresh)
 }
 
 const opts = {
@@ -45,6 +47,49 @@ function setupModals() {
     const total = receipts.reduce((sum, r) => sum + (r.total ?? 0), 0)
     const count = receipts.length
     const average = count > 0 ? Math.round(total / count) : 0
+
+    // 商品別集計
+    const itemStats = {}
+    const categoryStats = {}
+    const hourStats = Array(24).fill(0).map(() => ({ count: 0, total: 0 }))
+
+    receipts.forEach((r) => {
+      // 時間帯別集計
+      const hour = new Date(r.created_at).getHours()
+      hourStats[hour].count++
+      hourStats[hour].total += r.total ?? 0
+
+      // 商品・カテゴリー別集計
+      r.items?.forEach((item) => {
+        const itemName = item.name || '不明'
+        const category = item.category || 'other'
+        const price = item.price ?? 0
+
+        if (!itemStats[itemName]) {
+          itemStats[itemName] = { count: 0, total: 0, category }
+        }
+        itemStats[itemName].count++
+        itemStats[itemName].total += price
+
+        if (!categoryStats[category]) {
+          categoryStats[category] = { count: 0, total: 0 }
+        }
+        categoryStats[category].count++
+        categoryStats[category].total += price
+      })
+    })
+
+    // 商品ランキング（売上上位5件）
+    const itemRanking = Object.entries(itemStats)
+      .sort((a, b) => b[1].total - a[1].total)
+      .slice(0, 5)
+
+    // ピーク時間帯（売上トップ3）
+    const peakHours = hourStats
+      .map((stat, hour) => ({ hour, ...stat }))
+      .filter((stat) => stat.count > 0)
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 3)
     const content =
       count === 0
         ? '<div class="empty-report"><p>本日はまだ会計データがありません</p></div>'
@@ -94,6 +139,45 @@ function setupModals() {
           .join('')}
       </div>
     </div>
+    ${
+      count > 0
+        ? `
+    <div class="report-section">
+      <h3>📊 商品別売上TOP5</h3>
+      <div class="ranking-list">
+        ${itemRanking
+          .map(
+            ([name, stats], idx) => `
+          <div class="ranking-item">
+            <span class="ranking-number">${idx + 1}</span>
+            <span class="ranking-name">${escapeHtml(name)}</span>
+            <span class="ranking-count">${stats.count}個</span>
+            <span class="ranking-total">¥${stats.total.toLocaleString()}</span>
+          </div>
+        `
+          )
+          .join('')}
+      </div>
+    </div>
+    <div class="report-section">
+      <h3>⏰ ピーク時間帯</h3>
+      <div class="peak-hours-list">
+        ${peakHours
+          .map(
+            (stat) => `
+          <div class="peak-hour-item">
+            <span class="peak-hour">${stat.hour}:00-${stat.hour + 1}:00</span>
+            <span class="peak-count">${stat.count}件</span>
+            <span class="peak-total">¥${stat.total.toLocaleString()}</span>
+          </div>
+        `
+          )
+          .join('')}
+      </div>
+    </div>
+    `
+        : ''
+    }
     <div class="modal-actions">
       <button type="button" class="main-action-btn" id="closeDailyReportBtn">閉じる</button>
     </div>
@@ -108,7 +192,7 @@ function setupModals() {
     document.getElementById('weeklyHistoryModal').dispatchEvent(new CustomEvent('open'))
   })
   document.getElementById('clearTodayBtn').addEventListener('click', async () => {
-    if (!confirm('本日のデータを IndexedDB から削除しますか？')) return
+    if (!await showConfirm('確認', '本日のデータを IndexedDB から削除しますか？')) return
     await db.clearAllReceipts()
     closeModal('dailyClosingModal')
   })
@@ -227,7 +311,7 @@ function setupModals() {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation()
         const id = btn.getAttribute('data-receipt-id')
-        if (!id || !confirm('この会計を削除しますか？\n\n削除後は復元できません。')) return
+        if (!id || !await showConfirm('確認', 'この会計を削除しますか？\n\n削除後は復元できません。')) return
         await db.deleteReceipt(Number(id))
         await renderWeeklyHistory()
       })
@@ -316,11 +400,11 @@ function setupModals() {
     if (productSearchInput) productSearchInput.value = ''
     if (clearSearchBtn) clearSearchBtn.style.display = 'none'
     renderProductGrid()
-    productDialog.showModal()
+    openDialog(productDialog)
     setTimeout(() => productSearchInput?.focus(), 0)
   })
 
-  document.getElementById('closeProductDialogBtn').addEventListener('click', () => productDialog.close())
+  document.getElementById('closeProductDialogBtn').addEventListener('click', () => closeDialog(productDialog))
 
   productSearchInput?.addEventListener('input', () => {
     const v = productSearchInput.value.trim()
@@ -336,10 +420,10 @@ function setupModals() {
   })
 
   productDialog?.addEventListener('click', (e) => {
-    if (e.target === productDialog) productDialog.close()
+    if (e.target === productDialog) closeDialog(productDialog)
   })
   productDialog?.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') productDialog.close()
+    if (e.key === 'Escape') closeDialog(productDialog)
   })
 
   const tempProductDialog = document.getElementById('tempProductDialog')
@@ -350,10 +434,10 @@ function setupModals() {
     if (nameInput) nameInput.value = ''
     if (priceInput) priceInput.value = ''
     if (qtyInput) qtyInput.value = '1'
-    tempProductDialog?.showModal()
+    openDialog(tempProductDialog)
   })
-  document.getElementById('cancelTempProductBtn')?.addEventListener('click', () => tempProductDialog?.close())
-  document.getElementById('addTempProductBtn')?.addEventListener('click', () => {
+  document.getElementById('cancelTempProductBtn')?.addEventListener('click', () => closeDialog(tempProductDialog))
+  document.getElementById('addTempProductBtn')?.addEventListener('click', async () => {
     const nameInput = document.getElementById('tempProductName')
     const priceInput = document.getElementById('tempProductPrice')
     const qtyInput = document.getElementById('tempProductQuantity')
@@ -361,7 +445,7 @@ function setupModals() {
     const price = Number(priceInput?.value) || 0
     const qty = Math.max(1, parseInt(qtyInput?.value, 10) || 1)
     if (!name) {
-      alert('商品名を入力してください')
+      await showAlert('エラー', '商品名を入力してください')
       return
     }
     for (let i = 0; i < qty; i++) {
@@ -372,23 +456,24 @@ function setupModals() {
         category: 'product',
       })
     }
-    tempProductDialog?.close()
+    closeDialog(tempProductDialog)
     updateReceiptUI(register, opts)
     renderCustomerList(register, refresh)
     renderMenuSections(register, refresh)
     if (productDialog?.open) renderProductGrid(productSearchInput?.value ?? '')
   })
-  tempProductDialog?.addEventListener('click', (e) => { if (e.target === tempProductDialog) tempProductDialog.close() })
-  tempProductDialog?.addEventListener('keydown', (e) => { if (e.key === 'Escape') tempProductDialog.close() })
+  tempProductDialog?.addEventListener('click', (e) => { if (e.target === tempProductDialog) closeDialog(tempProductDialog) })
+  tempProductDialog?.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDialog(tempProductDialog) })
 
-  ;['dailyClosingModal', 'dailyReportModal', 'weeklyHistoryModal', 'settingsModal', 'priceSettingsModal', 'productAdminModal'].forEach((id) => {
+  ;['dailyClosingModal', 'dailyReportModal', 'weeklyHistoryModal', 'themeModal', 'dataManagementModal', 'priceSettingsModal', 'productAdminModal'].forEach((id) => {
     const el = document.getElementById(id)
     el?.addEventListener('click', (e) => { if (e.target === el) closeModal(id) })
   })
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return
-    if (document.getElementById('productDialog')?.open) document.getElementById('productDialog').close()
-    else ;['weeklyHistoryModal', 'dailyReportModal', 'dailyClosingModal', 'settingsModal', 'priceSettingsModal', 'productAdminModal'].forEach(closeModal)
+    const productDialog = document.getElementById('productDialog')
+    if (productDialog?.open) closeDialog(productDialog)
+    else ;['weeklyHistoryModal', 'dailyReportModal', 'dailyClosingModal', 'themeModal', 'dataManagementModal', 'priceSettingsModal', 'productAdminModal'].forEach(closeModal)
     closeSlideMenu()
   })
 
@@ -463,7 +548,7 @@ function setupModals() {
   window.openProductAdminModal = openProductAdminModal
 
   document.getElementById('closePriceSettingsBtn2')?.addEventListener('click', () => closeModal('priceSettingsModal'))
-  document.getElementById('priceSettingsSaveBtn')?.addEventListener('click', () => {
+  document.getElementById('priceSettingsSaveBtn')?.addEventListener('click', async () => {
     const cutWithColor = document.getElementById('settingCutWithColor')?.value.trim()
     const cutWithPerm = document.getElementById('settingCutWithPerm')?.value.trim()
     const s = getPriceSettings()
@@ -484,28 +569,28 @@ function setupModals() {
     closeModal('priceSettingsModal')
     renderMenuSections(register, refresh)
     if (typeof showToast === 'function') showToast('価格設定を保存しました', 'success')
-    else alert('価格設定を保存しました')
+    else await showAlert('成功', '価格設定を保存しました')
   })
-  document.getElementById('priceSettingsResetBtn')?.addEventListener('click', () => {
-    if (!confirm('割引ルールをデフォルトに戻しますか？')) return
+  document.getElementById('priceSettingsResetBtn')?.addEventListener('click', async () => {
+    if (!await showConfirm('確認', '割引ルールをデフォルトに戻しますか？')) return
     savePriceSettings({ ...DEFAULT_PRICE_SETTINGS })
     closeModal('priceSettingsModal')
     if (typeof showToast === 'function') showToast('デフォルトに戻しました', 'success')
-    else alert('デフォルトに戻しました')
+    else await showAlert('成功', 'デフォルトに戻しました')
   })
 
   document.getElementById('closeProductAdminBtn2')?.addEventListener('click', () => closeModal('productAdminModal'))
-  document.getElementById('productAdminAddBtn')?.addEventListener('click', () => {
+  document.getElementById('productAdminAddBtn')?.addEventListener('click', async () => {
     const nameInput = document.getElementById('productAdminNewName')
     const priceInput = document.getElementById('productAdminNewPrice')
     const name = (nameInput?.value ?? '').trim()
     const price = parseInt(priceInput?.value ?? '', 10)
     if (!name) {
-      alert('商品名を入力してください')
+      await showAlert('エラー', '商品名を入力してください')
       return
     }
     if (Number.isNaN(price) || price < 0) {
-      alert('金額を0以上の数値で入力してください')
+      await showAlert('エラー', '金額を0以上の数値で入力してください')
       return
     }
     const list = getCustomProducts()
@@ -523,9 +608,9 @@ function setupModals() {
     renderProductAdminList()
     renderProductGrid(document.getElementById('productSearchInput')?.value ?? '')
     if (typeof showToast === 'function') showToast('商品を追加しました', 'success')
-    else alert('商品を追加しました')
+    else await showAlert('成功', '商品を追加しました')
   })
-  document.getElementById('productAdminSaveBtn')?.addEventListener('click', () => {
+  document.getElementById('productAdminSaveBtn')?.addEventListener('click', async () => {
     const s = getPriceSettings()
     s.productPriceOverrides = {}
     document.querySelectorAll('#productAdminList input[data-product-id]').forEach((input) => {
@@ -540,17 +625,17 @@ function setupModals() {
     closeModal('productAdminModal')
     renderProductGrid(document.getElementById('productSearchInput')?.value ?? '')
     if (typeof showToast === 'function') showToast('商品設定を保存しました', 'success')
-    else alert('商品設定を保存しました')
+    else await showAlert('成功', '商品設定を保存しました')
   })
-  document.getElementById('productAdminResetBtn')?.addEventListener('click', () => {
-    if (!confirm('商品価格の上書きをすべて解除しますか？')) return
+  document.getElementById('productAdminResetBtn')?.addEventListener('click', async () => {
+    if (!await showConfirm('確認', '商品価格の上書きをすべて解除しますか？')) return
     const s = getPriceSettings()
     s.productPriceOverrides = {}
     savePriceSettings(s)
     closeModal('productAdminModal')
     renderProductGrid(document.getElementById('productSearchInput')?.value ?? '')
     if (typeof showToast === 'function') showToast('デフォルトに戻しました', 'success')
-    else alert('デフォルトに戻しました')
+    else await showAlert('成功', 'デフォルトに戻しました')
   })
 }
 
@@ -566,6 +651,7 @@ async function init () {
   setupModals()
   setupSettingsModal()
   setupPaymentAndCheckout(register, refresh)
+  setupKeyboardShortcuts(register, refresh)
   document.getElementById('logoutBtn').addEventListener('click', logout)
 }
 

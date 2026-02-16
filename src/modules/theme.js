@@ -165,9 +165,9 @@ export function refreshCustomPresetsList () {
     })
   })
   container.querySelectorAll('.custom-preset-delete').forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const id = btn.dataset.presetId
-      if (!id || !confirm('このプリセットを削除しますか？')) return
+      if (!id || !await showConfirm('確認', 'このプリセットを削除しますか？')) return
       const list = getCustomPresets().filter((p) => p.id !== id)
       saveCustomPresets(list)
       refreshCustomPresetsList()

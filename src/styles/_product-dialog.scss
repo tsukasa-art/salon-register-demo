@@ -358,3 +358,49 @@
   border-color: var(--soft-green);
 }
 
+/* ===================================
+   タブレット・デスクトップ対応
+   =================================== */
+
+/* タブレット（768px以上） */
+@media (min-width: 768px) {
+  .product-dialog {
+    width: min(700px, 96vw);
+  }
+
+  .product-modal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .temp-product-modal {
+    max-width: 500px;
+  }
+}
+
+/* デスクトップ（1024px以上） */
+@media (min-width: 1024px) {
+  .product-dialog {
+    width: min(900px, 96vw);
+  }
+
+  .product-modal-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .product-search-container {
+    padding: 20px 24px 16px;
+  }
+
+  .temp-product-modal {
+    max-width: 550px;
+  }
+
+  .temp-product-form {
+    padding: 28px 32px;
+  }
+}
+

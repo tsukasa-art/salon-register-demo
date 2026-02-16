@@ -1,7 +1,7 @@
 /**
- * 設定モーダル（テーマ色）
+ * 設定モーダル（テーマ色・データ管理）
  */
-import { closeModal } from './utils.js'
+import { closeModal, showAlert, showConfirm } from './utils.js'
 import {
   getPresetById,
   getThemeFromForm,
@@ -14,10 +14,12 @@ import {
   refreshPresetSelect,
   THEME_KEYS
 } from './theme.js'
+import * as db from '../db.js'
 
 export function setupSettingsModal () {
-  const closeSettings = () => closeModal('settingsModal')
-  document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings)
+  // テーマモーダル
+  const closeTheme = () => closeModal('themeModal')
+  document.getElementById('closeThemeModalBtn').addEventListener('click', closeTheme)
   const trigger = document.getElementById('themePresetTrigger')
   const dropdown = document.getElementById('themePresetDropdown')
   if (trigger && dropdown) {
@@ -84,4 +86,63 @@ export function setupSettingsModal () {
       })
     })
   })
+
+  // データ管理
+  document.getElementById('exportDataBtn')?.addEventListener('click', async () => {
+    try {
+      const data = await db.exportData()
+      const receiptCount = data.receipts?.length || 0
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `salon-register-backup-${new Date().toISOString().slice(0, 10)}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+      await showAlert('バックアップ完了', `${receiptCount}件の会計データを保存しました。\nファイルは安全な場所に保管してください。`)
+    } catch (error) {
+      await showAlert('エラー', `バックアップに失敗しました: ${error.message}`)
+    }
+  })
+
+  document.getElementById('importDataBtn')?.addEventListener('click', () => {
+    document.getElementById('importDataInput')?.click()
+  })
+
+  document.getElementById('importDataInput')?.addEventListener('change', async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    try {
+      const text = await file.text()
+      const data = JSON.parse(text)
+      
+      const confirmed = await showConfirm(
+        '警告：データを復元',
+        `現在の会計データ（すべての履歴）が削除され、\n選択したファイルの内容（${data.receipts?.length || 0}件）に置き換わります。\n\nこの操作は取り消せません。\n本当に復元しますか？`
+      )
+      
+      if (!confirmed) {
+        e.target.value = ''
+        return
+      }
+
+      const count = await db.importData(data)
+      await showAlert('復元完了', `${count}件の会計データを復元しました。\nページをリロードします。`)
+      
+      // ページをリロード
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+      
+      e.target.value = ''
+    } catch (error) {
+      await showAlert('エラー', `データの読み込みに失敗しました。\nファイル形式を確認してください。\n\nエラー: ${error.message}`)
+      e.target.value = ''
+    }
+  })
+
+  // データ管理モーダル
+  const closeDataManagement = () => closeModal('dataManagementModal')
+  document.getElementById('closeDataManagementBtn').addEventListener('click', closeDataManagement)
 }

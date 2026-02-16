@@ -99,3 +99,54 @@ export async function clearAllReceipts() {
     req.onerror = () => reject(req.error)
   })
 }
+
+/**
+ * 全データをJSON形式でエクスポート
+ */
+export async function exportData() {
+  const db = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_RECEIPTS, 'readonly')
+    const store = tx.objectStore(STORE_RECEIPTS)
+    const req = store.getAll()
+    req.onsuccess = () => {
+      const data = {
+        version: DB_VERSION,
+        exportedAt: new Date().toISOString(),
+        receipts: req.result
+      }
+      resolve(data)
+    }
+    req.onerror = () => reject(req.error)
+  })
+}
+
+/**
+ * JSONデータをインポート
+ */
+export async function importData(data) {
+  if (!data || !data.receipts || !Array.isArray(data.receipts)) {
+    throw new Error('無効なデータ形式です')
+  }
+
+  const db = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_RECEIPTS, 'readwrite')
+    const store = tx.objectStore(STORE_RECEIPTS)
+
+    // 既存データをクリア
+    store.clear()
+
+    // 新しいデータを追加
+    let count = 0
+    data.receipts.forEach((receipt) => {
+      // idを除外して追加（auto incrementで新しいIDが割り当てられる）
+      const { id, ...receiptData } = receipt
+      store.add(receiptData)
+      count++
+    })
+
+    tx.oncomplete = () => resolve(count)
+    tx.onerror = () => reject(tx.error)
+  })
+}

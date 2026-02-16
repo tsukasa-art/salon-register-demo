@@ -87,3 +87,92 @@
 .checkout-complete-popup .close-popup-btn:active {
   transform: translateY(0);
 }
+
+/* ===================================
+   カスタムアラート/確認モーダル
+   =================================== */
+.alert-modal,
+.confirm-modal {
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.alert-modal .alert-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.alert-modal h3,
+.confirm-modal h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.alert-modal p,
+.confirm-modal p {
+  font-size: 15px !important;
+  color: var(--text-medium);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  white-space: pre-wrap;
+}
+
+.alert-modal .main-action-btn {
+  width: 100%;
+  margin-top: 0;
+}
+
+.confirm-modal .modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.confirm-modal .modal-actions .clear-btn,
+.confirm-modal .modal-actions .main-action-btn {
+  flex: 1;
+  margin-top: 0;
+}
+
+/* ===================================
+   タブレット・デスクトップ対応
+   =================================== */
+
+/* タブレット（768px以上） */
+@media (min-width: 768px) {
+  .checkout-complete-popup .popup-content {
+    max-width: 500px;
+    padding: 40px;
+  }
+
+  .alert-modal,
+  .confirm-modal {
+    max-width: 500px;
+    padding: 32px;
+  }
+
+  .alert-modal h3,
+  .confirm-modal h3 {
+    font-size: 22px !important;
+  }
+
+  .alert-modal p,
+  .confirm-modal p {
+    font-size: 16px !important;
+  }
+}
+
+/* デスクトップ（1024px以上） */
+@media (min-width: 1024px) {
+  .checkout-complete-popup .popup-content {
+    max-width: 550px;
+  }
+
+  .alert-modal,
+  .confirm-modal {
+    max-width: 550px;
+  }
+}

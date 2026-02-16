@@ -45,11 +45,14 @@ export function setupSlideMenu () {
       if (action === 'weekly-history') document.getElementById('weeklyHistoryModal').dispatchEvent(new CustomEvent('open'))
       if (action === 'price-settings') window.openPriceSettingsModal?.()
       if (action === 'product-admin') window.openProductAdminModal?.()
-      if (action === 'settings') {
+      if (action === 'theme-settings') {
         refreshThemeForm()
         refreshPresetSelect()
         refreshCustomPresetsList()
-        openModal('settingsModal')
+        openModal('themeModal')
+      }
+      if (action === 'data-management') {
+        openModal('dataManagementModal')
       }
       if (action === 'logout') logout()
     })
