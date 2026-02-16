@@ -472,7 +472,6 @@ updateReceiptUI(register, opts)
   }
   window.openProductAdminModal = openProductAdminModal
 
-  document.getElementById('closePriceSettingsBtn')?.addEventListener('click', () => closeModal('priceSettingsModal'))
   document.getElementById('closePriceSettingsBtn2')?.addEventListener('click', () => closeModal('priceSettingsModal'))
   document.getElementById('priceSettingsSaveBtn')?.addEventListener('click', () => {
     const cutWithColor = document.getElementById('settingCutWithColor')?.value.trim()
@@ -505,7 +504,6 @@ updateReceiptUI(register, opts)
     else alert('デフォルトに戻しました')
   })
 
-  document.getElementById('closeProductAdminBtn')?.addEventListener('click', () => closeModal('productAdminModal'))
   document.getElementById('closeProductAdminBtn2')?.addEventListener('click', () => closeModal('productAdminModal'))
   document.getElementById('productAdminAddBtn')?.addEventListener('click', () => {
     const nameInput = document.getElementById('productAdminNewName')

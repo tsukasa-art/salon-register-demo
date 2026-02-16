@@ -18,7 +18,6 @@ import {
 export function setupSettingsModal () {
   const closeSettings = () => closeModal('settingsModal')
   document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings)
-  document.getElementById('closeSettingsHeaderBtn').addEventListener('click', closeSettings)
   const trigger = document.getElementById('themePresetTrigger')
   const dropdown = document.getElementById('themePresetDropdown')
   if (trigger && dropdown) {
