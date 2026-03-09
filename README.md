@@ -3,6 +3,7 @@
 美容室・サロン向けの料金計算レジの**デモ用**プロジェクトです。  
 Vite + Vanilla JavaScript で構成し、バックエンドなしで **JSON と IndexedDB のみ**で動作します。  
 **面接・ポートフォリオ用**のデモとして、スマートフォン〜デスクトップまで一通り操作できる想定で実装しています。
+https://salon-register-demo.pages.dev/
 
 ---
 
