@@ -1,74 +1,58 @@
-# Salon Register モジュール構造
+# サロンレジ デモ — モジュール構造
 
-salon-register-app プロジェクトの思想を活かし、適切な粒度でモジュール化しました。
-
-## JavaScript モジュール構成 (10ファイル)
+## JavaScript / TypeScript モジュール構成
 
 ```
 src/
-├── main.js (589行) ← エントリーポイント、初期化ロジック
+├── main.js (662行)          ← エントリーポイント・画面初期化
+├── register.js (246行)      ← レジ状態管理（顧客・明細・割引計算）
+├── auth.js (25行)           ← 簡易認証（sessionStorage フラグ）
+├── login.js (13行)          ← ログイン画面処理
+├── categoryInfo.ts (20行)   ← Category 型・CategoryInfo 型・CATEGORY_ORDER 定数
+├── db.ts (158行)            ← Receipt / ReceiptItem / ExportData 型、IndexedDB 操作
 └── modules/
-    ├── utils.js (31行) ← 共通ユーティリティ
-    ├── priceSettings.js (94行) ← 価格設定・計算ロジック
-    ├── theme.js (252行) ← テーマ管理
-    ├── settingsModal.js (158行) ← 設定モーダル
-    ├── store.js (78行) ← データストア・メニュー読み込み
-    ├── receiptUI.js (201行) ← レシート・顧客リスト UI
-    ├── menu.js (118行) ← メニューセクション表示
-    ├── checkoutPopup.js (28行) ← 会計完了ポップアップ
-    ├── slideMenu.js (64行) ← スライドメニュー
-    └── payment.js (134行) ← 支払い・会計処理
+    ├── store.ts (72行)      ← MenuItem / Product / MenusByCategory 型、JSON 読み込みと永続化
+    ├── menu.js (56行)       ← メニューセクション描画
+    ├── receiptUI.js (224行) ← 明細 UI 描画
+    ├── payment.js (133行)   ← 会計確定処理（個別・まとめて）
+    ├── priceSettings.js (60行)      ← 価格・割引設定（localStorage 永続化）
+    ├── settingsModal.js (148行)     ← 設定モーダル
+    ├── theme.js (177行)             ← テーマ管理
+    ├── slideMenu.js (60行)          ← ハンバーガーメニュー
+    ├── checkoutPopup.js (42行)      ← 会計完了ポップアップ
+    ├── keyboardShortcuts.js (113行) ← ショートカット（Enter/Esc/`/`/0-9）
+    └── utils.js (151行)             ← モーダル・ダイアログ共通処理
 ```
 
-**元の構成:** main.js (1312行) の単一ファイル  
-**現在:** 10ファイルに機能分割（各ファイル 30-260行）
+TypeScript を適用しているのはデータ層の 3 ファイル（`categoryInfo.ts` / `db.ts` / `modules/store.ts`）のみ。UI 層は Vanilla JS のまま。
 
-## SCSS モジュール構成 (14ファイル)
+## SCSS モジュール構成
 
 ```
 src/
-├── style.scss (34行) ← エントリーポイント、各パーシャルをインポート
+├── style.scss (33行) ← エントリーポイント、各パーシャルをインポート
 └── styles/
-    ├── _variables.scss (67行) ← CSS変数・カスタムプロパティ
-    ├── _layout.scss (406行) ← グリッド・ヘッダー・メインコンテンツ
-    ├── _receipt.scss (135行) ← レシートエリア
-    ├── _payment.scss (223行) ← 支払いUIコンポーネント
-    ├── _customers.scss (120行) ← 顧客リスト
-    ├── _product-dialog.scss (430行) ← 商品検索ダイアログ
-    ├── _slide-menu.scss (71行) ← ハンバーガーメニュー
-    ├── _theme-settings.scss (197行) ← テーマ設定モーダル
-    ├── _daily-closing.scss (411行) ← 日次締めモーダル
-    ├── _weekly-history.scss (502行) ← 週次履歴モーダル
-    ├── _admin-modal.scss (167行) ← 管理者モーダル
-    ├── _modal-base.scss (89行) ← モーダル共通スタイル
-    ├── _buttons.scss (165行) ← ボタンコンポーネント
-    └── _responsive.scss (119行) ← レスポンシブ対応
+    ├── _variables.scss (72行)        ← CSS 変数・カスタムプロパティ
+    ├── _layout.scss (406行)          ← グリッド・ヘッダー・メインコンテンツ
+    ├── _receipt.scss (241行)         ← レシートエリア
+    ├── _payment.scss (273行)         ← 支払い UI コンポーネント
+    ├── _customers.scss (120行)       ← 顧客リスト
+    ├── _product-dialog.scss (406行)  ← 商品検索ダイアログ
+    ├── _slide-menu.scss (88行)       ← ハンバーガーメニュー
+    ├── _theme-settings.scss (290行)  ← テーマ設定モーダル
+    ├── _daily-closing.scss (586行)   ← 日次締めモーダル
+    ├── _weekly-history.scss (639行)  ← 週次履歴モーダル
+    ├── _admin-modal.scss (168行)     ← 管理者モーダル
+    ├── _modal-base.scss (178行)      ← モーダル共通スタイル
+    ├── _buttons.scss (182行)         ← ボタンコンポーネント
+    └── _responsive.scss (120行)      ← レスポンシブ対応
 ```
-
-**元の構成:**
-- salon-register-app: style.css (6013行) + system-override.css (355行)
-- salon-register (初期): style.css (3108行) の単一ファイル
-
-**現在:** 14ファイルに機能分割（各ファイル 70-500行）
-
-## 設計思想
-
-### 適切な粒度
-- **1000行超えのファイルをゼロに**: 最大ファイルサイズ 589行（main.js）
-- **機能単位で分割**: 各モジュールが明確な責務を持つ
-- **可読性重視**: ファイル名から内容が推測できる
-
-### 保守性
-- **循環依存の回避**: コールバックパターンで依存を管理
-- **変更の局所化**: 機能追加・修正が特定ファイル内で完結
-- **テスト容易性**: 各モジュールを独立してテスト可能
-
-### 元プロジェクトとの比較
-- **salon-register-app**: 大きめのファイル構成（style.css 6013行）
-- **現行**: より細かい機能分割で保守性を向上
 
 ## 技術スタック
-- **TypeScript**: 型安全性を確保（tsconfig.json）
-- **SCSS**: CSS変数・ネスト・パーシャルを活用
-- **Tailwind CSS v4**: ユーティリティファーストCSS
-- **Vite**: 高速ビルド・HMR対応
+
+| 項目 | 内容 |
+|---|---|
+| ビルド | Vite |
+| 言語 | Vanilla JS（UI 層）+ TypeScript（データ層） |
+| スタイル | SCSS（Dart Sass）、CSS 変数でテーマ色を一元管理 |
+| データ永続化 | IndexedDB（会計履歴）/ localStorage（設定・商品） |
