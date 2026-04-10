@@ -1,17 +1,39 @@
 /**
  * IndexedDB: レシート（会計履歴）の保存・取得。デモ用・サーバーなし。
  */
+
+export interface ReceiptItem {
+  name: string
+  price: number
+  category: string
+}
+
+export interface Receipt {
+  id: number
+  items: ReceiptItem[]
+  total: number
+  created_at: string
+}
+
+export interface ExportData {
+  version: number
+  exportedAt: string
+  receipts: Receipt[]
+}
+
+type ReceiptPayload = Omit<Receipt, 'id'>
+
 const DB_NAME = 'salon_register_demo'
 const DB_VERSION = 1
 const STORE_RECEIPTS = 'receipts'
 
-function openDB() {
+function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION)
     req.onerror = () => reject(req.error)
-    req.onsuccess = () => resolve(req.result)
+    req.onsuccess = () => resolve(req.result as IDBDatabase)
     req.onupgradeneeded = (e) => {
-      const db = e.target.result
+      const db = (e.target as IDBOpenDBRequest).result
       if (!db.objectStoreNames.contains(STORE_RECEIPTS)) {
         const store = db.createObjectStore(STORE_RECEIPTS, { keyPath: 'id', autoIncrement: true })
         store.createIndex('created_at', 'created_at', { unique: false })
@@ -20,25 +42,20 @@ function openDB() {
   })
 }
 
-/**
- * @param {{ items: Array<{name, price, category}>, total: number, created_at: string }} payload
- */
-export async function saveReceipt(payload) {
+export async function saveReceipt(payload: ReceiptPayload): Promise<IDBValidKey> {
   const db = await openDB()
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_RECEIPTS, 'readwrite')
     const store = tx.objectStore(STORE_RECEIPTS)
-    const record = { ...payload, created_at: payload.created_at || new Date().toISOString() }
+    const record: ReceiptPayload = { ...payload, created_at: payload.created_at || new Date().toISOString() }
     const req = store.add(record)
     req.onsuccess = () => resolve(req.result)
     req.onerror = () => reject(req.error)
   })
 }
 
-/**
- * 直近 N 日分のレシートを取得（日付グループ用）
- */
-export async function getReceiptsLastDays(days = 7) {
+/** 直近 N 日分のレシートを取得（日付グループ用） */
+export async function getReceiptsLastDays(days = 7): Promise<Receipt[]> {
   const db = await openDB()
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_RECEIPTS, 'readonly')
@@ -48,37 +65,34 @@ export async function getReceiptsLastDays(days = 7) {
     const cutoff = new Date()
     cutoff.setDate(cutoff.getDate() - days)
     const cutoffStr = cutoff.toISOString()
-    const list = []
+    const list: Receipt[] = []
     req.onsuccess = () => {
       const cursor = req.result
       if (!cursor) {
         resolve(list)
         return
       }
-      if (cursor.value.created_at < cutoffStr) {
+      const value = cursor.value as Receipt
+      if (value.created_at < cutoffStr) {
         resolve(list)
         return
       }
-      list.push({ id: cursor.value.id, ...cursor.value })
+      list.push(value)
       cursor.continue()
     }
     req.onerror = () => reject(req.error)
   })
 }
 
-/**
- * 本日分のレシートを取得
- */
-export async function getReceiptsToday() {
+/** 本日分のレシートを取得 */
+export async function getReceiptsToday(): Promise<Receipt[]> {
   const today = new Date().toDateString()
   const all = await getReceiptsLastDays(1)
   return all.filter((r) => new Date(r.created_at).toDateString() === today)
 }
 
-/**
- * 指定IDのレシートを削除
- */
-export async function deleteReceipt(id) {
+/** 指定IDのレシートを削除 */
+export async function deleteReceipt(id: number): Promise<void> {
   const db = await openDB()
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_RECEIPTS, 'readwrite')
@@ -89,7 +103,7 @@ export async function deleteReceipt(id) {
   })
 }
 
-export async function clearAllReceipts() {
+export async function clearAllReceipts(): Promise<void> {
   const db = await openDB()
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_RECEIPTS, 'readwrite')
@@ -100,31 +114,26 @@ export async function clearAllReceipts() {
   })
 }
 
-/**
- * 全データをJSON形式でエクスポート
- */
-export async function exportData() {
+/** 全データをJSON形式でエクスポート */
+export async function exportData(): Promise<ExportData> {
   const db = await openDB()
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_RECEIPTS, 'readonly')
     const store = tx.objectStore(STORE_RECEIPTS)
     const req = store.getAll()
     req.onsuccess = () => {
-      const data = {
+      resolve({
         version: DB_VERSION,
         exportedAt: new Date().toISOString(),
-        receipts: req.result
-      }
-      resolve(data)
+        receipts: req.result as Receipt[],
+      })
     }
     req.onerror = () => reject(req.error)
   })
 }
 
-/**
- * JSONデータをインポート
- */
-export async function importData(data) {
+/** JSONデータをインポート */
+export async function importData(data: ExportData): Promise<number> {
   if (!data || !data.receipts || !Array.isArray(data.receipts)) {
     throw new Error('無効なデータ形式です')
   }
@@ -134,14 +143,11 @@ export async function importData(data) {
     const tx = db.transaction(STORE_RECEIPTS, 'readwrite')
     const store = tx.objectStore(STORE_RECEIPTS)
 
-    // 既存データをクリア
     store.clear()
 
-    // 新しいデータを追加
     let count = 0
     data.receipts.forEach((receipt) => {
-      // idを除外して追加（auto incrementで新しいIDが割り当てられる）
-      const { id, ...receiptData } = receipt
+      const { id: _id, ...receiptData } = receipt
       store.add(receiptData)
       count++
     })

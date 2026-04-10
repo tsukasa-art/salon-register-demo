@@ -64,6 +64,23 @@
   display: flex;
 }
 
+.mobile-logo-area {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.demo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px !important;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
 /* 固定ヘッダー分の余白（ログイン画面以外） */
 body:not(.login-page) {
   padding-top: 80px;

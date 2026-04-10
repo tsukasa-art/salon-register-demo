@@ -10,16 +10,39 @@
 <body class="login-page">
   <div class="login-view">
     <header class="login-header">
-      <h1>レジ</h1>
-      <p class="subtitle">料金計算システム（デモ）</p>
+      <div class="login-logo">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="6" cy="6" r="3"/>
+          <circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+      </div>
+      <h1>サロンレジ</h1>
+      <p class="subtitle">美容サロン向け 料金計算・POSシステム</p>
     </header>
     <main class="login-content">
-      <h2>デモログイン</h2>
-      <p class="login-description">下のボタンでメイン画面へ進みます。<br>認証はありません。</p>
+      <div class="demo-notice">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Portfolio Demo — 実運用データなし
+      </div>
+      <h2>デモを始める</h2>
       <form class="login-form" id="loginForm">
         <div id="errorMessage" class="error-message" style="display: none;"></div>
-        <button type="submit" class="login-btn" id="loginBtn">デモで始める</button>
+        <button type="submit" class="login-btn" id="loginBtn">
+          デモで始める
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
       </form>
+      <p class="tech-stack">Vite &middot; SCSS &middot; IndexedDB</p>
     </main>
   </div>
   <script type="module" src="/src/login.js"></script>
