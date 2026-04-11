@@ -1,4 +1,24 @@
 /* ===================================
+   モーダルヘッダー共通（タイトル中央揃え）
+   =================================== */
+.modal-header,
+.daily-report-header {
+  position: relative;
+}
+.modal-header h2,
+.daily-report-header h2 {
+  width: 100%;
+  text-align: center;
+}
+.modal-header .close-btn,
+.daily-report-header .close-btn {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ===================================
    会計完了ポップアップ
    =================================== */
 .checkout-complete-popup {

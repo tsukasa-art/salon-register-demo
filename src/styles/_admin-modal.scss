@@ -35,19 +35,20 @@
   text-align: center;
 }
 .daily-report-header .close-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
-  font-size: 28px;
+  font-size: 18px;
   cursor: pointer;
-  padding: 6px;
+  padding: 0;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 .daily-report-header .close-btn:hover {
   background: rgba(255, 255, 255, 0.25);

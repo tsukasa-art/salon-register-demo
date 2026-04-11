@@ -143,7 +143,7 @@ function setupModals() {
       count > 0
         ? `
     <div class="report-section">
-      <h3>📊 商品別売上TOP5</h3>
+      <h3>商品別売上TOP5</h3>
       <div class="ranking-list">
         ${itemRanking
           .map(
@@ -160,7 +160,7 @@ function setupModals() {
       </div>
     </div>
     <div class="report-section">
-      <h3>⏰ ピーク時間帯</h3>
+      <h3>ピーク時間帯</h3>
       <div class="peak-hours-list">
         ${peakHours
           .map(
@@ -178,9 +178,6 @@ function setupModals() {
     `
         : ''
     }
-    <div class="modal-actions">
-      <button type="button" class="main-action-btn" id="closeDailyReportBtn">閉じる</button>
-    </div>
     `
     document.getElementById('dailyReportContent').innerHTML = content
     document.getElementById('closeDailyReportBtn')?.addEventListener('click', () => closeModal('dailyReportModal'))
