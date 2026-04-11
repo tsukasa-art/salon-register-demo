@@ -42,9 +42,15 @@
     order: 2;
   }
 
-  .menu-section {
+  .menu-section,
+  .receipt {
     padding: 20px;
     margin-top: 20px;
+  }
+
+  .receipt-body {
+    overflow-y: clip;
+    min-height: unset;
   }
 
   .menu-section:first-child {
