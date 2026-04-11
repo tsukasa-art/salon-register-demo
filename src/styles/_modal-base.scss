@@ -17,6 +17,10 @@
   top: 50%;
   transform: translateY(-50%);
 }
+.modal-header .close-btn:hover,
+.daily-report-header .close-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+}
 
 /* ===================================
    会計完了ポップアップ
