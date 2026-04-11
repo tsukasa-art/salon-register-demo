@@ -298,15 +298,9 @@ function setupModals() {
         .join('')}
     </div>
     `
-    const html = contentHtml + `
-    <div class="modal-actions" style="padding: 20px 24px;">
-      <button type="button" class="main-action-btn" id="closeWeeklyHistoryBtn">閉じる</button>
-    </div>
-    `
     const container = document.getElementById('weeklyHistoryContent')
     if (!container) return
-    container.innerHTML = html
-    container.querySelector('#closeWeeklyHistoryBtn')?.addEventListener('click', () => closeModal('weeklyHistoryModal'))
+    container.innerHTML = contentHtml
     container.querySelectorAll('.delete-btn-ios').forEach((btn) => {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation()
@@ -317,6 +311,8 @@ function setupModals() {
       })
     })
   }
+
+  document.getElementById('closeWeeklyHistoryBtn')?.addEventListener('click', () => closeModal('weeklyHistoryModal'))
 
   document.getElementById('weeklyHistoryModal').addEventListener('open', async () => {
     await renderWeeklyHistory()
@@ -547,7 +543,7 @@ function setupModals() {
   }
   window.openProductAdminModal = openProductAdminModal
 
-  document.getElementById('closePriceSettingsBtn2')?.addEventListener('click', () => closeModal('priceSettingsModal'))
+  document.getElementById('closePriceSettingsBtn')?.addEventListener('click', () => closeModal('priceSettingsModal'))
   document.getElementById('priceSettingsSaveBtn')?.addEventListener('click', async () => {
     const cutWithColor = document.getElementById('settingCutWithColor')?.value.trim()
     const cutWithPerm = document.getElementById('settingCutWithPerm')?.value.trim()
@@ -579,7 +575,7 @@ function setupModals() {
     else await showAlert('成功', 'デフォルトに戻しました')
   })
 
-  document.getElementById('closeProductAdminBtn2')?.addEventListener('click', () => closeModal('productAdminModal'))
+  document.getElementById('closeProductAdminBtn')?.addEventListener('click', () => closeModal('productAdminModal'))
   document.getElementById('productAdminAddBtn')?.addEventListener('click', async () => {
     const nameInput = document.getElementById('productAdminNewName')
     const priceInput = document.getElementById('productAdminNewPrice')

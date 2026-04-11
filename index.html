@@ -169,13 +169,13 @@
     <div class="modal daily-closing-modal">
       <div class="modal-header">
         <h2>締め作業</h2>
+        <button type="button" class="close-btn" id="closeClosingBtn" aria-label="閉じる">×</button>
       </div>
       <div class="modal-content">
       <p>日次レポートの確認や、本日の一時データをクリアできます。</p>
       <div class="modal-actions">
         <button type="button" class="main-action-btn" id="dailyReportBtn">日次レポートを表示</button>
         <button type="button" class="clear-btn" id="clearTodayBtn">本日データをクリア</button>
-        <button type="button" class="link-btn" id="closeClosingBtn">閉じる</button>
       </div>
       </div>
     </div>
@@ -194,6 +194,7 @@
     <div class="modal weekly-history-modal">
       <div class="modal-header">
         <h2>過去の履歴（1週間分）</h2>
+        <button type="button" class="close-btn" id="closeWeeklyHistoryBtn" aria-label="閉じる">×</button>
       </div>
       <div class="modal-content" id="weeklyHistoryContent"></div>
     </div>
@@ -203,6 +204,7 @@
     <div class="modal settings-modal">
       <div class="modal-header">
         <h2>テーマ設定</h2>
+        <button type="button" class="close-btn" id="closeThemeModalBtn" aria-label="閉じる">×</button>
       </div>
       <div class="settings-modal-content">
         <p class="settings-description">プリセットを選ぶか、色を変更してカスタムプリセットとして保存できます。</p>
@@ -293,7 +295,6 @@
       <div class="modal-actions">
         <button type="button" class="main-action-btn" id="themeSavePresetBtn">現在のテーマを保存</button>
         <button type="button" class="clear-btn" id="themeResetBtn">デフォルトに戻す</button>
-        <button type="button" class="main-action-btn" id="closeThemeModalBtn">閉じる</button>
       </div>
       </div>
     </div>
@@ -303,6 +304,7 @@
     <div class="modal settings-modal">
       <div class="modal-header">
         <h2>データ管理</h2>
+        <button type="button" class="close-btn" id="closeDataManagementBtn" aria-label="閉じる">×</button>
       </div>
       <div class="settings-modal-content">
         <p class="settings-description">会計履歴をJSONファイルに保存したり、以前保存したファイルから復元できます。</p>
@@ -316,9 +318,6 @@
           <input type="file" id="importDataInput" accept=".json" style="display: none;" />
         </div>
       </div>
-      <div class="modal-actions">
-        <button type="button" class="main-action-btn" id="closeDataManagementBtn">閉じる</button>
-      </div>
     </div>
   </div>
 
@@ -326,6 +325,7 @@
     <div class="modal price-settings-modal">
       <div class="modal-header">
         <h2>価格・割引設定</h2>
+        <button type="button" class="close-btn" id="closePriceSettingsBtn" aria-label="閉じる">×</button>
       </div>
       <div class="price-settings-content">
         <p class="price-settings-note">※ すべて税込金額です。空欄の場合はデフォルトを使用します。</p>
@@ -347,7 +347,6 @@
         <div class="modal-actions">
           <button type="button" class="main-action-btn" id="priceSettingsSaveBtn">保存</button>
           <button type="button" class="clear-btn" id="priceSettingsResetBtn">デフォルトに戻す</button>
-          <button type="button" class="main-action-btn" id="closePriceSettingsBtn2">閉じる</button>
         </div>
       </div>
     </div>
@@ -357,6 +356,7 @@
     <div class="modal product-admin-modal">
       <div class="modal-header">
         <h2>商品管理</h2>
+        <button type="button" class="close-btn" id="closeProductAdminBtn" aria-label="閉じる">×</button>
       </div>
       <div class="product-admin-content">
         <section class="product-admin-add-section">
@@ -375,7 +375,6 @@
         <div class="modal-actions">
           <button type="button" class="main-action-btn" id="productAdminSaveBtn">保存</button>
           <button type="button" class="clear-btn" id="productAdminResetBtn">デフォルトに戻す</button>
-          <button type="button" class="main-action-btn" id="closeProductAdminBtn2">閉じる</button>
         </div>
       </div>
     </div>
