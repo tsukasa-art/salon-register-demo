@@ -4,8 +4,16 @@
 .weekly-history-modal {
   display: flex;
   flex-direction: column;
+  max-height: min(90vh, calc(100dvh - 40px));
   padding: 0;
   overflow: hidden;
+}
+.weekly-history-modal .modal-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 24px;
 }
 .weekly-history-modal .modal-header {
   flex-shrink: 0;
@@ -624,11 +632,7 @@
   /* 過去の履歴モーダル */
   .weekly-history-modal {
     max-width: 560px;
-    max-height: 88vh;
-  }
-
-  .weekly-history-modal .modal-content {
-    max-height: 73vh;
+    max-height: min(88vh, calc(100dvh - 40px));
   }
 }
 
@@ -687,11 +691,7 @@
   /* 過去の履歴モーダル */
   .weekly-history-modal {
     max-width: 560px;
-    max-height: 95vh;
-  }
-
-  .weekly-history-modal .modal-content {
-    max-height: 82vh;
+    max-height: min(95vh, calc(100dvh - 40px));
   }
 
   .weekly-history-content {

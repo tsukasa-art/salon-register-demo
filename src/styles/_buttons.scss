@@ -29,10 +29,10 @@
 .receipt-card-ios .card-content {
   display: flex;
   align-items: flex-start;
-  padding: 16px;
-  gap: 12px;
+  padding: 20px;
+  gap: 16px;
 }
-.receipt-card-ios .receipt-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.receipt-card-ios .receipt-info { flex: 1; display: flex; flex-direction: column; gap: 12px; }
 .receipt-card-ios .time-badge {
   background: var(--soft-green);
   color: var(--primary-green);
@@ -55,7 +55,7 @@
 .receipt-card-ios .item-row {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
   font-size: 16px;
 }
 .receipt-card-ios .item-row .item-name { font-size: 16px; font-weight: 500; margin-bottom: 0; }
@@ -63,22 +63,22 @@
 .receipt-divider {
   height: 1px;
   background: var(--soft-green);
-  margin: 12px 0;
+  margin: 20px 0;
 }
 .weekly-history-modal .receipt-summary {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 14px;
 }
 .weekly-history-modal .summary-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
+  font-size: 16px;
 }
 .weekly-history-modal .summary-row.total-row {
   font-weight: 700;
-  padding-top: 6px;
+  padding-top: 14px;
   border-top: 1px solid var(--soft-green);
 }
 .weekly-history-modal .summary-label { color: var(--text-dark); }
