@@ -32,6 +32,7 @@ https://salon-register-demo.pages.dev/
 - **モーダル**: オーバーレイ＋flex で共通の余白（margin）を統一。緑ヘッダーに白字・中央揃えのタイトルで「今何の設定をしているか」を明示。
 - **状態管理**: `register.js` で顧客・明細を保持。会計確定時に IndexedDB へ保存。
 - **レスポンシブ**: モバイルファースト。768px / 1024px でモーダル幅・レイアウトを調整し、タブレット・デスクトップでも使いやすい幅に。
+- **スライドメニュー構成**: 本番（Svelte 版）はフラットな項目リストですが、デモでは機能をカテゴリ分けした親子アコーディオン構成を採用し、画面遷移なしで設定へアクセスできるようにしています。
 - **操作補助**: キーボードショートカット（Enter 会計、Esc 閉じる、/ 検索フォーカス、0–9 クイック金額）、カスタムアラート／確認ダイアログでネイティブ `alert` を排除。
 
 ---
@@ -79,7 +80,7 @@ pnpm install
 pnpm run dev
 ```
 
-開発サーバー起動後、表示された URL（例: `http://localhost:5173`）で `/login.html` を開き、「デモで始める」からメイン画面へ進みます。
+開発サーバー起動後、表示された URL（例: `http://localhost:5173`）にアクセスします。
 
 ---
 
@@ -96,6 +97,7 @@ pnpm run build
 ## モック（TypeScript + SCSS + Tailwind CSS）
 
 本番の `index.html` / `main.js` / `style.scss` とは別に、**モック**を用意しています。
+本番で採用した TypeScript・Tailwind CSS を、バニラ JS 環境で試験的に組み込んだ独立した検証用画面です。
 
 - **エントリ**: `mock.html` → `src/mock/main.ts` + `src/mock/styles/main.scss`
 - **起動**: `pnpm run dev` のあと、`http://localhost:5173/mock.html` を開く
