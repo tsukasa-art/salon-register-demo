@@ -80,8 +80,6 @@ pnpm install
 pnpm run dev
 ```
 
-開発サーバー起動後、表示された URL（例: `http://localhost:5173`）にアクセスします。
-
 ---
 
 ## ビルド
@@ -91,17 +89,6 @@ pnpm run build
 ```
 
 `dist/` に出力されます。静的ホスティング（Cloudflare Pages など）にそのままデプロイできます。
-
----
-
-## モック（TypeScript + SCSS + Tailwind CSS）
-
-本番の `index.html` / `main.js` / `style.scss` とは別に、**モック**を用意しています。
-本番で採用した TypeScript・Tailwind CSS を、バニラ JS 環境で試験的に組み込んだ独立した検証用画面です。
-
-- **エントリ**: `mock.html` → `src/mock/main.ts` + `src/mock/styles/main.scss`
-- **起動**: `pnpm run dev` のあと、`http://localhost:5173/mock.html` を開く
-- **ビルド**: `pnpm run build` に含まれ、`dist/mock.html` に出力されます
 
 ---
 
