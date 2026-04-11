@@ -17,7 +17,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     rollupOptions: {
-      input: ['index.html', 'login.html', 'mock.html'],
+      input: ['index.html', 'login.html'],
     },
   },
 })
