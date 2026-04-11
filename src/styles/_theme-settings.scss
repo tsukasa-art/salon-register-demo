@@ -8,8 +8,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: max(24px, env(safe-area-inset-top), 6vh) 20px max(20px, env(safe-area-inset-bottom));
+  justify-content: center;
+  padding: max(24px, env(safe-area-inset-top), 6vh) 20px max(20px, env(safe-area-inset-bottom), 28vh);
   background: linear-gradient(135deg, var(--pale-green) 0%, var(--soft-green) 100%);
   box-sizing: border-box;
   overflow: hidden;
