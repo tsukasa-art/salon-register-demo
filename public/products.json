@@ -1,4 +1,6 @@
 [
   { "id": "p1", "name": "サンプル商品A", "price_including_tax": 1000, "category": "product" },
-  { "id": "p2", "name": "サンプル商品B", "price_including_tax": 2400, "category": "product" }
+  { "id": "p2", "name": "サンプル商品B", "price_including_tax": 3300, "category": "product" },
+  { "id": "p3", "name": "サンプル商品C", "price_including_tax": 5900, "category": "product" },
+  { "id": "p4", "name": "サンプル商品D", "price_including_tax": 11000, "category": "product" }
 ]
