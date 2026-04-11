@@ -3,28 +3,29 @@
    =================================== */
 
 .main-header {
-  background: var(--pale-green);
+  background: #4e7f69;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
   position: sticky;
   top: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 14px rgba(45, 74, 58, 0.2);
 }
 
 .main-header h1 {
   margin: 0;
   font-size: 22px !important;
   font-weight: 600;
-  color: var(--primary-green);
+  color: #fff;
 }
 
 .mobile-header {
-  background: var(--pale-green);
+  background: #4e7f69;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
   position: fixed;
   top: 0;
   left: 0;
@@ -66,17 +67,26 @@
 
 .mobile-logo-area {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
+}
+
+.mobile-brand-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .demo-pill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
   font-size: 10px !important;
   font-weight: 600;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  padding: 2px 8px;
   letter-spacing: 0.02em;
   line-height: 1;
 }

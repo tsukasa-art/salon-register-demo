@@ -39,10 +39,10 @@
   flex-shrink: 0;
   width: 36px;
   height: 36px;
-  border: none;
-  background: var(--pale-green);
-  color: var(--primary-green);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--bg-white);
+  color: var(--text-medium);
+  border-radius: 50%;
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -51,7 +51,8 @@
 }
 
 .product-dialog .close-btn:hover {
-  background: var(--soft-green);
+  background: var(--pale-green);
+  border-color: var(--soft-green);
 }
 
 .product-search-container {

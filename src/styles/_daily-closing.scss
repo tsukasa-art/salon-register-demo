@@ -20,8 +20,9 @@
 
 .mobile-logo-text {
   font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--primary-green);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.01em;
 }
 
 /* ハンバーガーボタン（本番と同じ学マス風・メインカラー） */
@@ -35,8 +36,8 @@
   width: 150px;
   height: 50px;
   padding: 0 20px;
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 50%, var(--soft-green) 100%);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(156, 193, 154, 0.34);
+  border: 1.5px solid rgba(238, 248, 235, 0.86);
   border-radius: 25px;
   cursor: pointer;
   font-size: 13px;
@@ -44,7 +45,7 @@
   letter-spacing: 2px;
   color: white;
   text-transform: uppercase;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(30, 50, 42, 0.28);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1002;
   margin-left: auto;
@@ -52,10 +53,10 @@
 }
 
 .hamburger:hover {
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(169, 204, 166, 0.44);
+  box-shadow: 0 6px 18px rgba(24, 42, 35, 0.3);
+  transform: translateY(-1px);
+  border-color: rgba(238, 248, 235, 0.92);
 }
 
 .hamburger:active {
@@ -63,7 +64,7 @@
 }
 
 .hamburger.active {
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+  background: rgba(145, 181, 143, 0.46);
 }
 
 .hamburger-text {
@@ -212,7 +213,7 @@
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 80px 20px 28px 24px;
+  padding: 92px 20px 28px 24px;
   padding-bottom: max(28px, env(safe-area-inset-bottom, 28px));
   display: flex;
   flex-direction: column;
@@ -227,18 +228,23 @@
   flex-direction: column;
   gap: 2px;
 }
+.slide-menu-group:first-child {
+  margin-top: 8px;
+}
 
 .slide-menu-sub {
   display: none;
   flex-direction: column;
-  gap: 2px;
-  padding-left: 12px;
-  margin-left: 24px;
-  padding-top: 4px;
-  padding-bottom: 6px;
+  gap: 4px;
+  padding-left: 14px;
+  margin-left: 12px;
+  padding-top: 6px;
+  padding-bottom: 8px;
+  border-left: 1px solid rgba(168, 198, 168, 0.5);
 }
 .slide-menu-sub.open {
   display: flex;
+  margin-bottom: 6px;
 }
 
 .slide-menu-parent .slide-menu-chevron {
@@ -252,21 +258,22 @@
 }
 
 .slide-menu-child {
-  padding: 12px 16px;
-  font-size: 15px;
+  padding: 9px 12px;
+  font-size: 14px;
   justify-content: flex-start;
   margin-left: 0;
-  padding-left: 13px;
+  background: transparent;
+  line-height: 1.4;
 }
 .slide-menu-item.slide-menu-child {
-  border-left: 3px solid var(--soft-green);
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
 }
 .slide-menu-child .menu-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-}
-.slide-menu-child .menu-icon {
-  display: none;
+  color: rgba(45, 74, 58, 0.92);
 }
 
 .slide-menu-item {
@@ -284,9 +291,22 @@
   font-size: 1rem;
   font-weight: 500;
   background: white;
-  border: none;
+  border: 1px solid rgba(212, 228, 217, 0.75);
   cursor: pointer;
   text-align: left;
+}
+
+.slide-menu-item.slide-menu-parent {
+  padding: 21px 24px;
+  border-color: rgba(168, 198, 168, 0.85);
+}
+
+.slide-menu-item.slide-menu-child::before {
+  background: rgba(232, 245, 233, 0.7);
+}
+
+.slide-menu-item.slide-menu-child:active {
+  transform: translateX(2px);
 }
 
 .slide-menu-item::before {
@@ -311,18 +331,6 @@
   transform: translateX(8px);
 }
 
-.slide-menu-item .menu-icon {
-  width: 48px;
-  height: 48px;
-  background: var(--light-green);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  flex-shrink: 0;
-}
-
 .slide-menu-item .menu-text {
   flex: 1;
   display: flex;
@@ -344,7 +352,7 @@
 
 @media (max-width: 767px) {
   .slide-menu-content {
-    padding-top: 100px;
+    padding-top: 112px;
   }
 }
 
@@ -364,7 +372,7 @@
     height: 3px;
   }
   .slide-menu-content {
-    padding-top: 90px;
+    padding-top: 102px;
   }
 }
 
