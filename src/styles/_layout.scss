@@ -210,7 +210,7 @@ main.main-content {
   border-color: white;
 }
 
-/* カテゴリ別の色分け（本番と統一） */
+/* カテゴリ別の色分け */
 .menu-btn[data-color-category="cut"] {
   background: var(--bg-cream);
   border-color: var(--cut-color);
@@ -311,7 +311,7 @@ main.main-content {
   letter-spacing: -0.3px;
 }
 
-/* Products セクション・商品リストボタン（本番と統一） */
+/* Products セクション・商品リストボタン */
 .products-section {
   background: var(--bg-white);
   border: 1px solid var(--border-light);
@@ -403,4 +403,3 @@ main.main-content {
   color: var(--text-medium);
   margin-bottom: 4px;
 }
-

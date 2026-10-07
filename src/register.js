@@ -63,12 +63,12 @@ export function createRegister() {
     return sum
   }
 
-  /** 小計（税抜）：税込合計から逆算（本番と同じ） */
+  /** 小計（税抜）：税込合計から逆算 */
   function getSubtotal() {
     return Math.round(getTotalWithTax() / 1.1)
   }
 
-  /** 消費税：税込合計 − 税抜小計（本番と同じ） */
+  /** 消費税：税込合計 − 税抜小計 */
   function getTax() {
     return getTotalWithTax() - getSubtotal()
   }

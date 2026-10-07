@@ -138,7 +138,7 @@
   text-align: center;
 }
 
-/* 商品カード（本番と同じ個数調整＋追加ボタン） */
+/* 商品カード（個数調整＋追加ボタン） */
 .product-modal-item {
   display: flex;
   flex-direction: column;
@@ -404,4 +404,3 @@
     padding: 28px 32px;
   }
 }
-
