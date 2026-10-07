@@ -18,3 +18,16 @@ export function getCategoryInfo(category: string): CategoryInfo {
   }
   return map[category as Category] ?? { title: category, subtitle: '', note: '' }
 }
+
+/** 明細のカテゴリの札 */
+export function getCategoryLabel(category: string): string {
+  const labels: Record<string, string> = {
+    haircut: 'カット',
+    color: 'カラー',
+    perm: 'パーマ',
+    option: 'オプション',
+    offer: 'オファー',
+    product: '商品',
+  }
+  return labels[category] ?? 'その他'
+}

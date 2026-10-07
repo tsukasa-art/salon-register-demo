@@ -41,7 +41,7 @@ export function renderMenuSections (register, onItemToggle) {
       btn.dataset.colorCategory = getColorCategory(menu.name)
       btn.innerHTML = `
         <span class="menu-name">${escapeHtml(menu.name)}</span>
-        <span class="menu-price">¥${effectivePrice.toLocaleString()}</span>
+        <span class="menu-price">${register.formatPrice(effectivePrice)}</span>
         ${isSelected ? `<span class="customer-number-badge">${badgeNum}</span>` : ''}
       `
       btn.addEventListener('click', () => {

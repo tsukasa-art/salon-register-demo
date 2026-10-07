@@ -120,6 +120,71 @@
   min-width: 80px;
 }
 
+/* 割引の表示（札・説明・元の値段 → 割引後） */
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.item-category {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--other-color);
+  color: white;
+  font-size: 11px !important;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.item-category[data-category="haircut"] { background: var(--cut-color); }
+.item-category[data-category="color"] { background: var(--color-color); }
+.item-category[data-category="perm"] { background: var(--perm-color); }
+
+.item-category[data-category="offer"] {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.item-note {
+  font-size: 12px !important;
+  color: var(--text-medium);
+}
+
+.price-breakdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px !important;
+}
+
+.original-price {
+  color: var(--text-light);
+}
+
+.discount-arrow {
+  color: var(--text-light);
+}
+
+.discounted-price {
+  font-weight: 600;
+  color: var(--primary-green);
+}
+
+.item-price--discount {
+  color: #c62828;
+}
+
 .remove-item,
 .remove-btn {
   position: absolute;

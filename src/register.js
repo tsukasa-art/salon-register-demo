@@ -13,6 +13,30 @@ function effectivePrice(item, allItems) {
   return item.price
 }
 
+/**
+ * 明細1行の表示用情報（金額は effectivePrice のまま。割引の説明と元の値段を足すだけ）
+ * 割引の行（オファー / マイナス金額のメニュー）はマイナスで表示し、明細の足し算が合計と一致するようにする
+ */
+function displayInfo(item, allItems) {
+  const price = effectivePrice(item, allItems)
+  if (item.category === 'offer' || item.price < 0) {
+    const note = '割引適用後の料金になります'
+    if (item.discountType === 'percentage') return { price: null, priceText: `-${Math.abs(item.price)}%`, note, isDiscount: true }
+    return { price: item.price, note, isDiscount: true }
+  }
+  if (item.category === 'haircut') {
+    const hasPerm = allItems.some((i) => i.category === 'perm')
+    const hasColor = allItems.some((i) => i.category === 'color')
+    if (hasPerm && price === 0) return { price, note: 'パーマ料金に含まれます' }
+    if (hasPerm || hasColor) {
+      const note = hasPerm ? 'パーマセット割引適用' : 'カラーセット割引適用'
+      if (price < item.price) return { price, note, originalPrice: item.price }
+      if (!hasPerm) return { price, note: 'カラーセット割引（元価格のまま）' }
+    }
+  }
+  return { price }
+}
+
 export function createRegister() {
   let customers = []
   let currentCustomerIndex = 0
@@ -179,8 +203,15 @@ export function createRegister() {
       return effectivePrice(item, getItems())
     },
 
+    /** 明細表示用（割引の説明・元の値段つき） */
+    getItemDisplay(item) {
+      return displayInfo(item, getItems())
+    },
+
     formatPrice(value) {
-      return `¥${Number(value).toLocaleString()}`
+      const n = Number(value)
+      if (n < 0) return `-¥${(-n).toLocaleString()}`
+      return `¥${n.toLocaleString()}`
     },
 
     getItemsForSave() {

@@ -2,6 +2,7 @@
  * ご利用明細・顧客リストの表示更新
  */
 import { escapeHtml, showAlert, showConfirm } from './utils.js'
+import { getCategoryLabel } from '../categoryInfo.js'
 
 /**
  * @param {ReturnType<import('../register.js').createRegister>} register
@@ -60,11 +61,26 @@ export function updateReceiptUI (register, opts = {}) {
           <button type="button" class="remove-item-all" aria-label="全削除" data-group-key="${escapeHtml(group.key)}"></button>
         `
       } else {
-        // 施術の場合はシンプル表示（×ボタンのみ）
+        // 施術の場合はシンプル表示（×ボタンのみ）。札・割引の説明・元の値段を添える
+        const display = register.getItemDisplay(group.items[0])
+        const badge = display.isDiscount ? 'offer' : group.category
+        const priceText = display.price == null ? display.priceText : register.formatPrice(display.price * quantity)
         div.className = 'receipt-item receipt-item-single'
         div.innerHTML = `
-          <span class="item-name">${escapeHtml(group.name)}</span>
-          <span class="item-price">${register.formatPrice(totalPrice)}</span>
+          <div class="item-info">
+            <span class="item-name">${escapeHtml(group.name)}</span>
+            <div class="item-meta">
+              <span class="item-category" data-category="${escapeHtml(badge)}">${escapeHtml(getCategoryLabel(badge))}</span>
+              ${display.note ? `<span class="item-note">${escapeHtml(display.note)}</span>` : ''}
+            </div>
+            ${display.originalPrice != null ? `
+            <div class="price-breakdown">
+              <s class="original-price">${register.formatPrice(display.originalPrice)}</s>
+              <span class="discount-arrow" aria-hidden="true">→</span>
+              <span class="discounted-price">${register.formatPrice(display.price)}</span>
+            </div>` : ''}
+          </div>
+          <span class="item-price${display.isDiscount ? ' item-price--discount' : ''}">${priceText}</span>
           <button type="button" class="remove-item" aria-label="削除" data-group-key="${escapeHtml(group.key)}">×</button>
         `
       }
